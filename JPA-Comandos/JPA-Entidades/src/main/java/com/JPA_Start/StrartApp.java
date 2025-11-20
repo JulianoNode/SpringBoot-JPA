@@ -8,6 +8,7 @@ public class StrartApp {
 
 	public static void main(String[] args) {
 		SpringApplication.run(StrartApp.class, args);
+		System.err.println(" Systema rodando na porta:8080...");
 	}
 
 }

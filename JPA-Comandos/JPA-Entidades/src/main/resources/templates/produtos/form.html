@@ -4,26 +4,35 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>Produto</title>
+	<!-- IMPORTA O CSS EXTERNO -->
+	<link rel="stylesheet" th:href="@{/css/styleNovo.css}">
 </head>
 
 <body>
-	<h2 th:text="${produto.id == null} ? 'Novo Produto' : 'Editar Produto'">Produto</h2>
+	<div class="center-page">
+	    <div class="form-card">
 
-	<form th:action="@{/produtos/salvar}" th:object="${produto}" method="POST">
-		<input type="hidden" th:field="*{id}" />
-		<div>
-			<label>Nome:</label>
-			<input type="text" th:field="*{nome}" required />
-		</div>
-		<div>
-			<label>Preço:</label>
-			<input type="number" step="0.01" th:field="*{preco}" />
-		</div>
-		<div>
-			<button type="submit">Salvar</button>
-			<a th:href="@{/produtos}">Cancelar</a>
-		</div>
-	</form>
+	        <h2>Novo Produto</h2>
+
+	        <form th:action="@{/produtos/salvar}" method="post">
+
+	            <div class="form-group">
+	                <label for="nome">Nome:</label>
+	                <input id="nome" type="text" name="nome" required />
+	            </div>
+
+	            <div class="form-group">
+	                <label for="preco">Preço:</label>
+	                <input id="preco" type="number" name="preco" step="0.01" required />
+	            </div>
+
+	            <button type="submit" class="btn-save">Salvar</button>
+	            <a href="/produtos" class="btn-cancel">Cancelar</a>
+
+	        </form>
+
+	    </div>
+	</div>
 </body>
 
 </html>

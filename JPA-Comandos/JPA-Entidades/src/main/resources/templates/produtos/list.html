@@ -4,43 +4,37 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>Produtos</title>
-	<style>
-		.pagination {
-			display: flex;
-			gap: 8px;
-			list-style: none;
-			padding-left: 0;
-		}
 
-		.active {
-			font-weight: bold;
-			text-decoration: underline;
-		}
-
-		table {
-			width: 100%;
-			border-collapse: collapse;
-		}
-
-		th,
-		td {
-			padding: 8px;
-			border: 1px solid #ddd;
-			text-align: left;
-		}
-	</style>
+	<!-- IMPORTA O CSS EXTERNO -->
+	<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
 
 	<h2>Produtos</h2>
+	<div class="button-area">
+		<a href="/produtos/novo" class="btn-green">Novo Produto</a>
+	</div>
+	<form th:action="@{/produtos}" method="get" class="filter-form">
+		<input type="text" name="busca" th:value="${busca}" placeholder="Nome do produto" />
 
-	<form th:action="@{/produtos}" method="get">
-		<input type="text" name="busca" th:value="${busca}" placeholder="Buscar produto..." />
-		<button type="submit">Buscar</button>
-		<a th:href="@{/produtos/novo}">Novo Produto</a>
+		<input type="number" name="min" th:value="${min}" step="0.01" placeholder="Preço mínimo" />
+
+		<input type="number" name="max" th:value="${max}" step="0.01" placeholder="Preço máximo" />
+
+		<select name="sort">
+			<option value="">Ordenar por</option>
+			<option value="nome" th:selected="${sort == 'nome'}">Nome</option>
+			<option value="preco" th:selected="${sort == 'preco'}">Preço</option>
+		</select>
+
+		<select name="dir">
+			<option value="asc" th:selected="${dir == 'asc'}">Crescente</option>
+			<option value="desc" th:selected="${dir == 'desc'}">Decrescente</option>
+		</select>
+
+		<button type="submit" class="btn-filter">Filtrar</button>
 	</form>
-
 	<table>
 		<thead>
 			<tr>
@@ -54,7 +48,6 @@
 			<tr th:each="p : ${produtos}">
 				<td th:text="${p.id}">1</td>
 				<td th:text="${p.nome}">Nome</td>
-				<!-- Formata para BR: vírgula decimal e ponto como separador de milhar -->
 				<td th:text="${#numbers.formatDecimal(p.preco, 1, 'COMMA', 2, 'POINT')}">0,00</td>
 				<td>
 					<a th:href="@{/produtos/editar/{id}(id=${p.id})}">Editar</a> |
@@ -65,28 +58,49 @@
 		</tbody>
 	</table>
 
-	<!-- Paginação -->
-	<div>
+	<!-- Página X de Y -->
+	<div class="page-info">
 		<span th:text="'Página ' + ${produtos.number + 1} + ' de ' + ${produtos.totalPages}"></span>
 	</div>
 
-	<div>
+	<!-- Paginação -->
+	<div class="pagination-container">
 		<ul class="pagination">
-			<li th:if="${produtos.hasPrevious()}">
-				<a th:href="@{/produtos(page=${produtos.number - 1}, busca=${busca})}">Anterior</a>
+
+			<!-- Primeiro -->
+			<li th:classappend="${produtos.first} ? 'disabled'">
+				<a th:href="@{/produtos(page=0, busca=${busca}, min=${min}, max=${max}, sort=${sort}, dir=${dir})}">&laquo;
+				</a>
 			</li>
 
+			<!-- Anterior -->
+			<li th:classappend="${!produtos.hasPrevious()} ? 'disabled'">
+				<a
+					th:href="@{/produtos(page=${produtos.number - 1}, busca=${busca}, min=${min}, max=${max}, sort=${sort}, dir=${dir})}">&lsaquo;
+				</a>
+			</li>
+
+			<!-- Números -->
 			<li th:each="i : ${#numbers.sequence(0, produtos.totalPages - 1)}">
-				<a th:href="@{/produtos(page=${i}, busca=${busca})}" th:text="${i + 1}"
-					th:classappend="${i == produtos.number} ? ' active' : ''">1</a>
+				<a th:href="@{/produtos(page=${i}, busca=${busca}, min=${min}, max=${max}, sort=${sort}, dir=${dir})}"
+					th:text="${i + 1}" th:classappend="${i == produtos.number} ? 'active'"></a>
 			</li>
 
-			<li th:if="${produtos.hasNext()}">
-				<a th:href="@{/produtos(page=${produtos.number + 1}, busca=${busca})}">Próximo</a>
+			<!-- Próxima -->
+			<li th:classappend="${!produtos.hasNext()} ? 'disabled'">
+				<a
+					th:href="@{/produtos(page=${produtos.number + 1}, busca=${busca}, min=${min}, max=${max}, sort=${sort}, dir=${dir})}">
+					&rsaquo;</a>
+			</li>
+
+			<!-- Última -->
+			<li th:classappend="${produtos.last} ? 'disabled'">
+				<a
+					th:href="@{/produtos(page=${produtos.totalPages - 1}, busca=${busca}, min=${min}, max=${max}, sort=${sort}, dir=${dir})}">
+					&raquo;</a>
 			</li>
 		</ul>
 	</div>
-
 </body>
 
 </html>
