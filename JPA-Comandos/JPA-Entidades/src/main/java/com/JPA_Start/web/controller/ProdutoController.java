@@ -20,8 +20,8 @@ import com.JPA_Start.service.ProdutoService;
 @RequestMapping({ "/", "/produtos" })
 public class ProdutoController {
 
-    @Autowired
-    private ProdutoService service;
+	@Autowired
+	private ProdutoService service;
 
 	/*
 	 * @GetMapping public String listar(Model model) {
@@ -29,19 +29,25 @@ public class ProdutoController {
 	 * "produtos/list"; // templates/produtos/list.html }
 	 */
 	@GetMapping
-	 public String listar(
-	            @RequestParam(value = "busca", required = false) String busca,
-	            @RequestParam(value = "page", defaultValue = "0") int page,
-	            Model model
-	    ) {
-	        Pageable pageable = PageRequest.of(page, 2); // 5 itens por página
-	        Page<Produto> produtos = service.buscarPorNome(busca, pageable);
+	public String listar(@RequestParam(value = "busca", required = false) String busca,
+			@RequestParam(value = "min", required = false) Double min,
+			@RequestParam(value = "max", required = false) Double max,
+			@RequestParam(value = "sort", required = false) String sort,
+			@RequestParam(value = "dir", defaultValue = "asc") String dir,
+			@RequestParam(value = "page", defaultValue = "0") int page, Model model) {
 
-	        model.addAttribute("produtos", produtos);
-	        model.addAttribute("busca", busca);
-	        return "produtos/list";
-	    }
-	
+		Page<Produto> produtos = service.buscaAvancada(busca, min, max, sort, dir, page);
+
+		model.addAttribute("produtos", produtos);
+		model.addAttribute("busca", busca);
+		model.addAttribute("min", min);
+		model.addAttribute("max", max);
+		model.addAttribute("sort", sort);
+		model.addAttribute("dir", dir);
+
+		return "produtos/list";
+	}
+
 	@GetMapping("/novo")
 	public String novoForm(Model model) {
 		model.addAttribute("produto", new Produto());
@@ -50,7 +56,13 @@ public class ProdutoController {
 
 	@PostMapping("/salvar")
 	public String salvar(@ModelAttribute Produto produto) {
-		service.salvar(produto);
+		if (produto.getId() != null) {
+			// editar
+			service.atualizar(produto.getId(), produto);
+		} else {
+			// novo produto
+			service.salvar(produto);
+		}
 		return "redirect:/produtos";
 	}
 

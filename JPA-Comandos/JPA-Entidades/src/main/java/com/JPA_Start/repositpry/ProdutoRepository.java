@@ -12,11 +12,12 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 	Page<Produto> findByNomeContainingIgnoreCase(String nome, Pageable pageable);
 
 	@Query("""
-			     SELECT p FROM Produto p
-			     WHERE (:nome IS NULL OR LOWER(p.nome) LIKE LOWER(CONCAT('%', :nome, '%')))
-			     AND (:min IS NULL OR p.preco >= :min)
-			     AND (:max IS NULL OR p.preco <= :max)
+			    SELECT p FROM Produto p
+			    WHERE (:nome IS NULL OR :nome = '' OR LOWER(p.nome) LIKE LOWER(CONCAT('%', :nome, '%')))
+			    AND (:min IS NULL OR p.preco >= :min)
+			    AND (:max IS NULL OR p.preco <= :max)
 			""")
+
 	Page<Produto> buscaAvancada(@Param("nome") String nome, @Param("min") Double min, @Param("max") Double max,
 			Pageable pageable);
 }

@@ -64,7 +64,6 @@ public class ProdutoService {
 			return repository.save(existente);
 		}).orElse(null);
 	}
-
 	// ---------------------------------------------------------
 	// 🔍 BUSCA AVANÇADA (filtros + ordenação)
 	// ---------------------------------------------------------
@@ -82,7 +81,7 @@ public class ProdutoService {
 			}
 		}
 
-		Pageable pageable = PageRequest.of(page, 5, ordenacao);
+		Pageable pageable = PageRequest.of(page, 3, ordenacao);
 
 		// 2. Busca via repository
 		return repository.buscaAvancada(nome, min, max, pageable);
