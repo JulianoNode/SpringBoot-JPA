@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Cadastro de Produto</title>
+	<link rel="stylesheet" th:href="@{/css/styleNovo.css}">
+</head>
+
+<body>
+	<h1>Cadastro de Produto</h1>
+	<form th:action="@{/produtos}" th:object="${produto}" method="post">
+		<input type="hidden" th:field="*{id}">
+
+		<label>Nome:</label>
+		<input type="text" th:field="*{nome}"><br><br>
+
+		<label>Preço:</label>
+		<input type="number" step="0.01" th:field="*{preco}"><br><br>
+
+		<label>Categoria:</label>
+		<select th:field="*{categoria.id}">
+			<option value="">Selecione</option>
+			<option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nome}">
+			</option>
+		</select><br><br>
+
+		<button type="submit">Salvar</button>
+	</form>
+
+	<a th:href="@{/produtos}">Voltar</a>
+</body>
+
+</html>

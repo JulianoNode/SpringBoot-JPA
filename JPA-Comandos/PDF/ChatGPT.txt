@@ -1,0 +1,41 @@
+❓ Quais arquivos você quer que eu gere primeiro?
+
+Aqui está a lista completa dos arquivos que posso criar:
+
+📌 Model
+
+Produto.java
+
+Categoria.java
+
+📌 Repository
+
+ProdutoRepository.java
+
+CategoriaRepository.java
+
+📌 Service
+
+ProdutoService.java
+
+CategoriaService.java
+
+📌 Controller
+
+ProdutoController.java
+
+CategoriaController.java
+
+📌 Thymeleaf (templates HTML)
+
+produtos/list.html
+
+produtos/form.html
+
+categorias/list.html
+
+categorias/form.html
+
+📌 application.properties (opcional)
+
+Com configuração do MySQL.
