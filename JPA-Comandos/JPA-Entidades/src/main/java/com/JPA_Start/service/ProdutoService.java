@@ -2,6 +2,9 @@ package com.JPA_Start.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.JPA_Start.model.Produto;
@@ -10,16 +13,25 @@ import com.JPA_Start.repositpry.ProdutoRepository;
 @Service
 public class ProdutoService {
 
-	private final ProdutoRepository repository;
-
-	public ProdutoService(ProdutoRepository repository) {
-		this.repository = repository;
-	}
+    @Autowired
+    private ProdutoRepository repository;
 
 	// findAll() Busca todos os registros de uma tabela.
 	public List<Produto> listarTodos() {
 		return repository.findAll();
 	}
+
+	// Busca Isso permite procurar por qualquer parte do nome (LIKE %nome%)
+	public Page<Produto> listarPaginado(Pageable pageable) {
+		return repository.findAll(pageable);
+	}
+
+    public Page<Produto> buscarPorNome(String nome, Pageable pageable) {
+        if (nome == null || nome.isBlank()) {
+            return repository.findAll(pageable);
+        }
+        return repository.findByNomeContainingIgnoreCase(nome, pageable);
+    }
 
 	// findById() Busca um registro pelo ID.
 	public Produto buscarPorId(Long id) {

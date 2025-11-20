@@ -2,26 +2,26 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8">
+	<meta charset="UTF-8" />
 	<title>Produto</title>
-	<link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
-	<h1 th:text="${produto.id} == null ? 'Novo Produto' : 'Editar Produto'">Produto</h1>
-	<form th:action="@{/produtos}" th:object="${produto}" method="post">
+	<h2 th:text="${produto.id == null} ? 'Novo Produto' : 'Editar Produto'">Produto</h2>
+
+	<form th:action="@{/produtos/salvar}" th:object="${produto}" method="POST">
 		<input type="hidden" th:field="*{id}" />
 		<div>
-			<label>Nome</label>
-			<input type="text" th:field="*{nome}" />
+			<label>Nome:</label>
+			<input type="text" th:field="*{nome}" required />
 		</div>
 		<div>
-			<label>Preço</label>
+			<label>Preço:</label>
 			<input type="number" step="0.01" th:field="*{preco}" />
 		</div>
 		<div>
 			<button type="submit">Salvar</button>
-			<a href="/produtos">Cancelar</a>
+			<a th:href="@{/produtos}">Cancelar</a>
 		</div>
 	</form>
 </body>

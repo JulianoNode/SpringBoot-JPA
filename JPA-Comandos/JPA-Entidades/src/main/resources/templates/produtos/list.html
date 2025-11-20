@@ -2,14 +2,45 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8">
+	<meta charset="UTF-8" />
 	<title>Produtos</title>
-	<link rel="stylesheet" href="/css/style.css" />
+	<style>
+		.pagination {
+			display: flex;
+			gap: 8px;
+			list-style: none;
+			padding-left: 0;
+		}
+
+		.active {
+			font-weight: bold;
+			text-decoration: underline;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+		}
+
+		th,
+		td {
+			padding: 8px;
+			border: 1px solid #ddd;
+			text-align: left;
+		}
+	</style>
 </head>
 
 <body>
-	<h1>Produtos</h1>
-	<a href="/produtos/novo">Novo Produto</a>
+
+	<h2>Produtos</h2>
+
+	<form th:action="@{/produtos}" method="get">
+		<input type="text" name="busca" th:value="${busca}" placeholder="Buscar produto..." />
+		<button type="submit">Buscar</button>
+		<a th:href="@{/produtos/novo}">Novo Produto</a>
+	</form>
+
 	<table>
 		<thead>
 			<tr>
@@ -20,19 +51,42 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="prod : ${produtos}">
-				<td th:text="${prod.id}">1</td>
-				<td th:text="${prod.nome}">Nome</td>
-				<td th:text="${prod.preco}">0.0</td>
+			<tr th:each="p : ${produtos}">
+				<td th:text="${p.id}">1</td>
+				<td th:text="${p.nome}">Nome</td>
+				<!-- Formata para BR: vírgula decimal e ponto como separador de milhar -->
+				<td th:text="${#numbers.formatDecimal(p.preco, 1, 'COMMA', 2, 'POINT')}">0,00</td>
 				<td>
-					<a th:href="@{/produtos/editar/{id}(id=${prod.id})}">Editar</a>
-					|
-					<a th:href="@{/produtos/deletar/{id}(id=${prod.id})}"
-						onclick="return confirm('Excluir?')">Excluir</a>
+					<a th:href="@{/produtos/editar/{id}(id=${p.id})}">Editar</a> |
+					<a th:href="@{/produtos/deletar/{id}(id=${p.id})}"
+						onclick="return confirm('Tem certeza que deseja excluir?');">Excluir</a>
 				</td>
 			</tr>
 		</tbody>
 	</table>
+
+	<!-- Paginação -->
+	<div>
+		<span th:text="'Página ' + ${produtos.number + 1} + ' de ' + ${produtos.totalPages}"></span>
+	</div>
+
+	<div>
+		<ul class="pagination">
+			<li th:if="${produtos.hasPrevious()}">
+				<a th:href="@{/produtos(page=${produtos.number - 1}, busca=${busca})}">Anterior</a>
+			</li>
+
+			<li th:each="i : ${#numbers.sequence(0, produtos.totalPages - 1)}">
+				<a th:href="@{/produtos(page=${i}, busca=${busca})}" th:text="${i + 1}"
+					th:classappend="${i == produtos.number} ? ' active' : ''">1</a>
+			</li>
+
+			<li th:if="${produtos.hasNext()}">
+				<a th:href="@{/produtos(page=${produtos.number + 1}, busca=${busca})}">Próximo</a>
+			</li>
+		</ul>
+	</div>
+
 </body>
 
 </html>
