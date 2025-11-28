@@ -8,7 +8,12 @@
 </head>
 
 <body>
+
 	<h1>Cadastro de Produto</h1>
+
+	<!-- ALERTA DE ERRO -->
+	<div th:if="${erro}" class="alert alert-danger" th:text="${erro}"></div><br>
+
 	<form th:action="@{/produtos}" th:object="${produto}" method="post">
 		<input type="hidden" th:field="*{id}">
 

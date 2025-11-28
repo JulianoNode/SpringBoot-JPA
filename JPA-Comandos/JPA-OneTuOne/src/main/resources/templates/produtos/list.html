@@ -9,6 +9,8 @@
 
 <body>
 	<h1>Produtos</h1>
+	
+	
 	<a th:href="@{/produtos/novo}">Novo Produto</a> |
 	<a th:href="@{/categorias}">Categoria</a>
 	<table border="1">
@@ -25,12 +27,25 @@
 			<td th:text="${p.preco}"></td>
 			<td th:text="${p.categoria.nome}"></td>
 			<td>
-				<a th:href="@{/produtos/editar/{id}(id=${p.id})}">Editar</a> |
-				<a th:href="@{/produtos/excluir/{id}(id=${p.id})}">Excluir</a>
+				<a th:href="@{/produtos/editar/{id}(id=${p.id})}">Editar </a> |
+				<a th:href="@{/produtos/excluir/{id}(id=${p.id})}"> Excluir</a>
 				
 			</td>
 		</tr>
 	</table>
+	<h3>Aprender usar: Bidirecional no banco de dados e no java</h3>
+	<h4>🔍 Obiservacao: Exemplos do mundo real<br>
+	✔️ Uma pessoa tem um CPF.<br>
+	✔️ Um usuário tem um perfil.<br>
+	✔️ Um produto tem um estoque específico.<br>
+	✔️ Uma pessoa tem um endereço residencial (se for único).</h4>
+	<h4>📎 Detalhes importantes<br>
+	✔️ Sempre existe um lado “dono” do relacionamento
+	O lado que contém o @JoinColumn é o lado dono da relação.<br>
+	✔️ Pode ser unidirecional ou bidirecional
+	Unidirecional → Pessoa conhece Endereco
+	Bidirecional → Pessoa ↔ Endereco conhecem um ao outro<br>
+	✔️ Pode ter comportamentos especiais</h4>
 </body>
 
 </html>

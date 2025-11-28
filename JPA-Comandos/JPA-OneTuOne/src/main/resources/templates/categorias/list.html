@@ -11,8 +11,8 @@
 
 <body>
 	<h1>Categorias</h1>
-	<a th:href="@{/categorias/novo}">Nova Categoria</a>
-	<a th:href="@{/produtos}">Produto</a>
+	<a th:href="@{/categorias/novo}">Nova Categoria </a> | 
+	<a th:href="@{/produtos}"> Produto</a>
 	
 	<table border="1">
 		<tr>
@@ -24,12 +24,14 @@
 			<td th:text="${c.id}"></td>
 			<td th:text="${c.nome}"></td>
 			<td>
-				<a th:href="@{/categorias/editar/{id}(id=${c.id})}">Editar</a> |
-				<a th:href="@{/categorias/excluir/{id}(id=${c.id})}">Excluir</a> 
+				<a th:href="@{/categorias/editar/{id}(id=${c.id})}">Editar </a> |
+				<a th:href="@{/categorias/excluir/{id}(id=${c.id})}"> Excluir</a> 
 				
 			</td>
 		</tr>
 	</table>
+	<h3>Relacionamento @OneToOne unidirecional</h3>
+	<img th:src="@{/fotos/unidirecional.png}" alt="foto">
 </body>
 
 </html>
