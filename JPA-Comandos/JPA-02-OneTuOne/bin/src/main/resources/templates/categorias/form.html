@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Cadastro de Categoria</title>
+	<!-- IMPORTA O CSS EXTERNO -->
+	<link rel="stylesheet" th:href="@{/css/styleNovo.css}">
+</head>
+
+<body>
+	<h1>Cadastro de Categoria</h1>
+	<form th:action="@{/categorias}" th:object="${categoria}" method="post">
+		<input type="hidden" th:field="*{id}">
+
+		<label>Nome:</label>
+		<input type="text" th:field="*{nome}"><br><br>
+
+		<button type="submit">Salvar</button>
+	</form>
+	<a th:href="@{/categorias}">Voltar</a>
+</body>
+
+</html>

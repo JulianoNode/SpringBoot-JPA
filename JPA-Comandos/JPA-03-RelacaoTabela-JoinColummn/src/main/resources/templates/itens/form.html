@@ -1,0 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Item do Produto</title>
+</head>
+
+<body>
+	<h1>Item do Produto</h1>
+
+	<form th:action="@{/itens/salvar}" method="post" th:object="${item}">
+		<input type="hidden" th:field="*{id}">
+		<label>Descrição:</label>
+		<input type="text" th:field="*{descricao}" required><br><br>
+		<input type="hidden" th:field="*{produtoId}">
+		<button type="submit" style="background-color:#4caf50;color:white;padding:6px 12px;border:none;cursor:pointer;">
+			Salvar
+		</button>
+		<a th:href="@{'/itens/produto/' + ${produtoId}}" style="margin-left:10px;">
+			<button type="button"
+				style="background-color:#888;color:white;padding:6px 12px;border:none;cursor:pointer;">
+				Voltar
+			</button></a>
+	</form>
+
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Lista de Categorias</title>
+</head>
+
+<body>
+	<h1>Categorias</h1>
+	<a th:href="@{/categorias/novo}">
+		<button
+			style="background-color:#2196f3;color:white;padding:5px 10px;border:none;cursor:pointer;">Cadastro</button>
+	</a>
+
+	<br /><br />
+	<table border="1" cellpadding="8" cellspacing="0">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Nome</th>
+				<th>Ações</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="cat : ${categorias}">
+				<td th:text="${cat.id}">1</td>
+				<td th:text="${cat.nome}">Nome</td>
+				<td>
+					<a th:href="@{/categorias/editar/{id}(id=${cat.id})}">
+						<button
+							style="background-color:#4caf50;color:white;padding:5px 10px;border:none;cursor:pointer;">Editar</button>
+					</a>
+					<a th:href="@{/categorias/deletar/{id}(id=${cat.id})}"
+						onclick="return confirm('Tem certeza que deseja excluir essa categoria?');">
+						<button
+							style="background-color:#f44336;color:white;padding:5px 10px;border:none;cursor:pointer;">Deletar</button>
+					</a>
+				</td>
+			</tr>
+		</tbody>
+	</table><br>
+	<a th:href="@{/produtos}"> <button
+			style="background-color:rgb(128, 255, 128);color:rgb(0, 0, 0);padding:5px 10px;border:none;cursor:pointer;">
+			Produto
+		</button></a>
+	<a th:href="@{/categorias}"> <button
+			style="background-color:rgb(128, 255, 128);color:rgb(0, 0, 0);padding:5px 10px;border:none;cursor:pointer;">
+			Categoria
+		</button></a>
+</body>
+
+</html>
