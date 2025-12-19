@@ -1,4 +1,4 @@
-package com.Strart.conf;
+package com.Strart.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

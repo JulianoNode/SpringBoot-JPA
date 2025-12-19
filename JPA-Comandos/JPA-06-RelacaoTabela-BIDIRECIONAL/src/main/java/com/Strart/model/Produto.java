@@ -19,6 +19,7 @@ public class Produto {
 
     private String nome;
     private Double preco;
+    private String imagem; // caminho ou nome do arquivo
 
     // LADO DONO DO RELACIONAMENTO
     @ManyToOne(fetch = FetchType.EAGER)
@@ -36,6 +37,8 @@ public class Produto {
 	public void setNome(String nome) {this.nome = nome;}
 	public Double getPreco() {return preco;}
 	public void setPreco(Double preco) {this.preco = preco;}
+    public String getImagem() { return imagem; }
+    public void setImagem(String imagem) { this.imagem = imagem; }
 	public Categoria getCategoria() {return categoria;}
 	public void setCategoria(Categoria categoria) {this.categoria = categoria;}
 	public Fornecedor getFornecedor() {return fornecedor;}

@@ -2,44 +2,68 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Cadastro de Produto</title>
+	<meta charset="UTF-8">
+	<title>Produtos</title>
 </head>
 
 <body>
 
 	<h2>Cadastro de Produto</h2>
 
-	<form th:action="@{/produtos}" th:object="${produto}" method="post">
+	<form th:action="@{/produtos}" th:object="${produto}" method="post" enctype="multipart/form-data">
 
-		<input th:field="*{nome}" placeholder="Nome" required>
-		<input th:field="*{preco}" placeholder="Preço" required>
-
-		<select th:field="*{categoriaId}" required>
-			<option value="">Selecione</option>
-			<option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nome}">
-			</option>
-		</select>
-
-		<select th:field="*{fornecedorId}" required>
-			<option value="">Selecione</option>
-			<option th:each="f : ${fornecedores}" th:value="${f.id}" th:text="${f.nome}">
-			</option>
-		</select>
-
-		<button type="submit">Salvar</button>
+		<div> <label>Nome</label>
+			<input type="text" th:field="*{nome}" />
+			<label>Preço</label>
+			<input type="number" step="0.01" th:field="*{preco}" />
+			<label>Imagem</label>
+			<!-- FILE NÃO USA th:field -->
+			<input type="file" name="arquivo" />
+		</div><br>
+		<div>
+			<label>Categoria</label>
+			<select th:field="*{categoriaId}">
+				<option value="">Selecione</option>
+				<option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nome}">
+				</option>
+			</select>
+			<label>Fornecedor</label>
+			<select th:field="*{fornecedorId}">
+				<option value="">Selecione</option>
+				<option th:each="f : ${fornecedores}" th:value="${f.id}" th:text="${f.nome}">
+				</option>
+			</select>
+			<button type="submit">Salvar</button>
+		</div>
+		<br>
 	</form>
-
 	<hr>
 
-	<h3>Produtos Cadastrados</h3>
+	<h3>Lista de Produtos</h3>
 
-	<ul>
-		<li th:each="p : ${produtos}">
-			<span th:text="${p.nome}"></span> -
-			<span th:text="${p.preco}"></span> |
-			<span th:text="${p.categoria.nome}"></span> |
-			<span th:text="${p.fornecedor.nome}"></span>
-		</li>
-	</ul>
+	<table border="1" cellpadding="8">
+		<thead>
+			<tr>
+				<th>Imagem</th>
+				<th>Nome</th>
+				<th>Preço</th>
+				<th>Categoria</th>
+				<th>Fornecedor</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr th:each="p : ${produtos}">
+				<td>
+					<img th:if="${p.imagem != null}" th:src="@{/imagens/{img}(img=${p.imagem})}" width="50"
+						height="50" />
+				</td>
+				<td th:text="${p.nome}"></td>
+				<td th:text="${p.preco}"></td>
+				<td th:text="${p.categoria.nome}"></td>
+				<td th:text="${p.fornecedor.nome}"></td>
+			</tr>
+		</tbody>
 </body>
+
 </html>

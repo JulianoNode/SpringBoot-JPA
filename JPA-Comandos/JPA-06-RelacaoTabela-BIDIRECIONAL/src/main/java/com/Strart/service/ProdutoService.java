@@ -27,6 +27,8 @@ public class ProdutoService {
     public void salvar(ProdutoDTO dto) {
         Produto produto = mapper.map(dto, Produto.class);
 
+        produto.setImagem(dto.getImagem());
+        
         produto.setCategoria(
             categoriaRepository.findById(dto.getCategoriaId())
                 .orElseThrow(() -> new RuntimeException("Categoria não encontrada"))
