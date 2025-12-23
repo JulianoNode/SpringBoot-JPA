@@ -55,8 +55,8 @@
 		<tbody>
 			<tr th:each="p : ${produtos}">
 				<td>
-					<img th:if="${p.imagem != null}" th:src="@{/imagens/{img}(img=${p.imagem})}" width="50"
-						height="50" />
+					<img th:if="${p.imagem != null}" th:src="@{/imagens/{img}(img=${p.imagem})}"
+					 width="50"	height="50" />
 				</td>
 				<td th:text="${p.nome}"></td>
 				<td th:text="${p.preco}"></td>

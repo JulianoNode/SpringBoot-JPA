@@ -7,13 +7,17 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Strart.DTOs.ProdutoDTO;
@@ -50,10 +54,11 @@ public class ProdutoController {
     ) throws IOException {
 
         if (!arquivo.isEmpty()) {
+        	//String nomeArquivo = arquivo.getOriginalFilename();
             String nomeArquivo = UUID.randomUUID() + "_" +
                     arquivo.getOriginalFilename().replaceAll("\\s+", "_");
 
-            Path pastaUploads = Paths.get("uploads");
+            Path pastaUploads = Paths.get("uploads/produtos");
             Files.createDirectories(pastaUploads);
 
             Path caminhoArquivo = pastaUploads.resolve(nomeArquivo);
@@ -65,4 +70,21 @@ public class ProdutoController {
         produtoService.salvar(produto);
         return "redirect:/produtos";
     }
+}
+
+@Controller
+@RequestMapping("/imagens")
+class ImagemProdutoController {
+
+	@GetMapping("/{nome}")
+	@ResponseBody
+	public ResponseEntity<byte[]> carregarImagem(@PathVariable String nome) throws IOException {
+	    Path caminho = Paths.get("uploads/produtos").resolve(nome);
+
+	    byte[] imagem = Files.readAllBytes(caminho);
+
+	    return ResponseEntity.ok()
+	        .header(HttpHeaders.CONTENT_TYPE, Files.probeContentType(caminho))
+	        .body(imagem);
+	}
 }
