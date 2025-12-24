@@ -15,34 +15,52 @@ import com.Strart.repository.ProdutoRepository;
 @Service
 public class ProdutoService {
 
-    @Autowired
-    private ProdutoRepository produtoRepository;
-    @Autowired
-    private CategoriaRepository categoriaRepository;
-    @Autowired
-    private FornecedorRepository fornecedorRepository;
-    @Autowired
-    private ModelMapper mapper;
+	@Autowired
+	private ProdutoRepository produtoRepository;
+	@Autowired
+	private CategoriaRepository categoriaRepository;
+	@Autowired
+	private FornecedorRepository fornecedorRepository;
+	@Autowired
+	private ModelMapper mapper;
 
-    public void salvar(ProdutoDTO dto) {
-        Produto produto = mapper.map(dto, Produto.class);
+	// Listar Produto
+	public List<Produto> listar() {
+		return produtoRepository.findAll();
+	}
 
-        produto.setImagem(dto.getImagem());
-        
-        produto.setCategoria(
-            categoriaRepository.findById(dto.getCategoriaId())
-                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"))
-        );
+	// Salvar Produto
+	public void salvar(ProdutoDTO dto) {
+		Produto produto = mapper.map(dto, Produto.class);
 
-        produto.setFornecedor(
-            fornecedorRepository.findById(dto.getFornecedorId())
-                .orElseThrow(() -> new RuntimeException("Fornecedor não encontrado"))
-        );
+		produto.setImagem(dto.getImagem());
 
-        produtoRepository.save(produto);
-    }
+		produto.setCategoria(categoriaRepository.findById(dto.getCategoriaId())
+				.orElseThrow(() -> new RuntimeException("Categoria não encontrada")));
 
-    public List<Produto> listar() {
-        return produtoRepository.findAll();
-    }
+		produto.setFornecedor(fornecedorRepository.findById(dto.getFornecedorId())
+				.orElseThrow(() -> new RuntimeException("Fornecedor não encontrado")));
+
+		produtoRepository.save(produto);
+	}
+
+	// Editar produto
+	public Produto buscarPorId(Long id) {
+		return produtoRepository.findById(id).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+	}
+
+	// Editar produto para atualizar
+	public void atualizar(ProdutoDTO dto) {
+		Produto produto = buscarPorId(dto.getId());
+		produto.setNome(dto.getNome());
+		produto.setPreco(dto.getPreco());
+		produto.setImagem(dto.getImagem()); // 🔥 ESSENCIAL
+
+		produtoRepository.save(produto);
+	}
+
+	// Excluir produto
+	public void excluir(Long id) {
+		produtoRepository.deleteById(id);
+	}
 }

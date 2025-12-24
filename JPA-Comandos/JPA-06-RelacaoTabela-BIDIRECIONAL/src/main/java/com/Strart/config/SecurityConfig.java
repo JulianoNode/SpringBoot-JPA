@@ -29,6 +29,9 @@ public class SecurityConfig {
                     "/login"
                 ).permitAll()
                 // 🔒 ROTAS PROTEGIDAS
+                .requestMatchers("/imagens/**").permitAll()
+                .requestMatchers("/produtos/editar/**").hasRole("ADMIN")
+                .requestMatchers("/produtos/excluir/**").hasRole("ADMIN")
                 .requestMatchers("/produtos/**").authenticated()
                 // 🔒 QUALQUER OUTRA
                 .anyRequest().authenticated()

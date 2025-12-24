@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 	<meta charset="UTF-8">
@@ -10,16 +10,23 @@
 
 	<h2>Cadastro de Produto</h2>
 
-	<form th:action="@{/produtos}" th:object="${produto}" method="post" enctype="multipart/form-data">
+	<form th:action="${produto.id} != null ? @{/produtos/editar} : @{/produtos}" th:object="${produto}" method="post"
+		enctype="multipart/form-data">
 
-		<div> <label>Nome</label>
+		<input type="hidden" th:field="*{id}" />
+
+		<div>
+			<label>Nome</label>
 			<input type="text" th:field="*{nome}" />
+
 			<label>Preço</label>
 			<input type="number" step="0.01" th:field="*{preco}" />
+
 			<label>Imagem</label>
-			<!-- FILE NÃO USA th:field -->
 			<input type="file" name="arquivo" />
-		</div><br>
+		</div>
+		<br>
+
 		<div>
 			<label>Categoria</label>
 			<select th:field="*{categoriaId}">
@@ -27,16 +34,20 @@
 				<option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nome}">
 				</option>
 			</select>
+
 			<label>Fornecedor</label>
 			<select th:field="*{fornecedorId}">
 				<option value="">Selecione</option>
 				<option th:each="f : ${fornecedores}" th:value="${f.id}" th:text="${f.nome}">
 				</option>
 			</select>
-			<button type="submit">Salvar</button>
+
+			<button type="submit">
+				<span th:text="${produto.id} != null ? 'Atualizar' : 'Salvar'"></span>
+			</button>
 		</div>
-		<br>
 	</form>
+
 	<hr>
 
 	<h3>Lista de Produtos</h3>
@@ -49,21 +60,40 @@
 				<th>Preço</th>
 				<th>Categoria</th>
 				<th>Fornecedor</th>
+				<th>Ações</th>
 			</tr>
 		</thead>
 
 		<tbody>
 			<tr th:each="p : ${produtos}">
 				<td>
-					<img th:if="${p.imagem != null}" th:src="@{/imagens/{img}(img=${p.imagem})}"
-					 width="50"	height="50" />
+					<img th:if="${p.imagem != null}" th:src="@{/imagens/{img}(img=${p.imagem})}" width="50"
+						height="50" />
 				</td>
+
 				<td th:text="${p.nome}"></td>
 				<td th:text="${p.preco}"></td>
 				<td th:text="${p.categoria.nome}"></td>
 				<td th:text="${p.fornecedor.nome}"></td>
+
+				<td>
+					<a th:href="@{/produtos/editar/{id}(id=${p.id})}" 
+					sec:authorize="hasRole('ADMIN')">
+						Editar
+					</a>
+
+					<form th:action="@{/produtos/excluir/{id}(id=${p.id})}" method="post" style="display:inline"
+						sec:authorize="hasRole('ADMIN')">
+
+						<button type="submit" onclick="return confirm('Deseja excluir este produto?')">
+							Excluir
+						</button>
+					</form>
+				</td>
 			</tr>
 		</tbody>
+	</table>
+
 </body>
 
 </html>
