@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.Strart.DTOs.ProdutoDTO;
@@ -32,15 +35,11 @@ public class ProdutoService {
 	// Salvar Produto
 	public void salvar(ProdutoDTO dto) {
 		Produto produto = mapper.map(dto, Produto.class);
-
 		produto.setImagem(dto.getImagem());
-
 		produto.setCategoria(categoriaRepository.findById(dto.getCategoriaId())
 				.orElseThrow(() -> new RuntimeException("Categoria não encontrada")));
-
 		produto.setFornecedor(fornecedorRepository.findById(dto.getFornecedorId())
 				.orElseThrow(() -> new RuntimeException("Fornecedor não encontrado")));
-
 		produtoRepository.save(produto);
 	}
 
@@ -63,4 +62,11 @@ public class ProdutoService {
 	public void excluir(Long id) {
 		produtoRepository.deleteById(id);
 	}
+
+	// Paginação da pagina
+	public Page<Produto> listarPaginado(int page, int size) {
+		Pageable pageable = PageRequest.of(page, size); // 5 produtos por página
+		return produtoRepository.findAll(pageable);
+	}
+
 }

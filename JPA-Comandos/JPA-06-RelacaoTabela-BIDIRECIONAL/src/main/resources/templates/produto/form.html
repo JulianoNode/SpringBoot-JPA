@@ -77,8 +77,7 @@
 				<td th:text="${p.fornecedor.nome}"></td>
 
 				<td>
-					<a th:href="@{/produtos/editar/{id}(id=${p.id})}" 
-					sec:authorize="hasRole('ADMIN')">
+					<a th:href="@{/produtos/editar/{id}(id=${p.id})}" sec:authorize="hasRole('ADMIN')">
 						Editar
 					</a>
 
@@ -93,6 +92,32 @@
 			</tr>
 		</tbody>
 	</table>
+
+	<div style="margin-top: 20px">
+
+	    <!-- Anterior -->
+	    <a th:if="${paginaAtual != null and paginaAtual > 0}"
+	       th:href="@{/produtos(page=${paginaAtual - 1})}">
+	        Anterior
+	    </a>
+
+	    <!-- Números -->
+	    <span th:if="${totalPaginas != null}"
+	          th:each="i : ${#numbers.sequence(0, totalPaginas - 1)}">
+
+	        <a th:href="@{/produtos(page=${i})}"
+	           th:text="${i + 1}"
+	           th:classappend="${i == paginaAtual} ? 'pagina-ativa' : ''">
+	        </a>
+	    </span>
+
+	    <!-- Próximo -->
+	    <a th:if="${paginaAtual != null and paginaAtual + 1 < totalPaginas}"
+	       th:href="@{/produtos(page=${paginaAtual + 1})}">
+	        Próximo ➡
+	    </a>
+
+	</div>
 
 </body>
 

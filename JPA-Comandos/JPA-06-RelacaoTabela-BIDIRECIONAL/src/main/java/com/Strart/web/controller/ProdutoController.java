@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -39,14 +40,26 @@ public class ProdutoController {
 	@Autowired
 	private FornecedorRepository fornecedorRepository;
 
-	// Listar Produto
+	// Listar Produto e  Paginação da pagina
+	
 	@GetMapping
-	public String tela(Model model) {
-		model.addAttribute("produto", new ProdutoDTO());
-		model.addAttribute("categorias", categoriaRepository.findAll());
-		model.addAttribute("fornecedores", fornecedorRepository.findAll());
-		model.addAttribute("produtos", produtoService.listar());
-		return "produto/form";
+	public String listarProdutos(
+	        @RequestParam(defaultValue = "0") int page,
+	        @RequestParam(defaultValue = "2") int size,
+	        Model model) {
+
+	    Page<Produto> paginaProdutos = produtoService.listarPaginado(page, size);
+
+	    model.addAttribute("produto", new ProdutoDTO());
+	    model.addAttribute("categorias", categoriaRepository.findAll());
+	    model.addAttribute("fornecedores", fornecedorRepository.findAll());
+	    model.addAttribute("produtos", produtoService.listar());
+	    
+	    model.addAttribute("produtos", paginaProdutos.getContent());
+	    model.addAttribute("paginaAtual", page);
+	    model.addAttribute("totalPaginas", paginaProdutos.getTotalPages());
+
+	    return "produto/form";
 	}
 
 	// Salvar Produto
@@ -103,20 +116,18 @@ public class ProdutoController {
 	// MÉTODO AUXILIAR DE IMAGEM
 	private void salvarImagem(ProdutoDTO produto, MultipartFile arquivo) throws IOException {
 		if (arquivo != null && !arquivo.isEmpty()) {
-
 			String nomeArquivo = UUID.randomUUID() + "_" + 
 			arquivo.getOriginalFilename().replaceAll("\\s+", "_");
-
 			Path pasta = Paths.get("uploads/produtos");
 			Files.createDirectories(pasta);
-
 			Files.write(pasta.resolve(nomeArquivo), arquivo.getBytes());
-
 			// 🔥 substitui pela nova
 			produto.setImagem(nomeArquivo);
 		}
 		// ✅ se não enviou nova imagem, mantém a antiga
 	}
+
+	
 }
 
 //------------------------ Classe Imagens ----------------------
@@ -128,9 +139,8 @@ class ImagemProdutoController {
 	@ResponseBody
 	public ResponseEntity<byte[]> carregarImagem(@PathVariable String nome) throws IOException {
 		Path caminho = Paths.get("uploads/produtos").resolve(nome);
-
 		byte[] imagem = Files.readAllBytes(caminho);
-
-		return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, Files.probeContentType(caminho)).body(imagem);
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE,
+				Files.probeContentType(caminho)).body(imagem);
 	}
 }
