@@ -1,0 +1,110 @@
+.titulo-form {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* FORM */
+.form-produto {
+    max-width: 900px;   /* AUMENTADO PARA 3 CAMPOS */
+    margin: 0 auto;
+}
+
+/* LINHA COM 3 CAMPOS */
+.linha-form {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+/* CADA CAMPO */
+.campo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* LABEL */
+.campo label {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+/* INPUT TEXTO */
+.campo-texto {
+    padding: 10px 12px;
+    border: 2px solid #555;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.campo-texto:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 6px rgba(13, 110, 253, 0.4);
+}
+
+/* VARIAÇÕES */
+.campo-nome {
+    border-color: #6c757d;
+}
+
+.campo-preco {
+    border-color: #198754;
+}
+
+/* IMAGEM */
+.campo-imagem {
+    margin-top: 6px;
+    font-size: 14px;
+}
+
+/* SELECT */
+.campo-select {
+    padding: 10px 12px;
+    border: 2px solid #555;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+}
+
+.campo-select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 6px rgba(13, 110, 253, 0.4);
+}
+
+/* VARIAÇÕES SELECT */
+.campo-categoria {
+    border-color: #0d6efd;
+}
+
+.campo-fornecedor {
+    border-color: #6610f2;
+}
+
+/* BOTÃO */
+.campo-botao {
+    justify-content: flex-end;
+}
+
+.btn-salvar {
+    margin-top: auto;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #198754;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-salvar:hover {
+    background-color: #157347;
+    transform: translateY(-1px);
+}
+
+.btn-salvar:active {
+    transform: translateY(0);
+}

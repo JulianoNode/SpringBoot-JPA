@@ -42,6 +42,12 @@ public class ProdutoService {
 				.orElseThrow(() -> new RuntimeException("Fornecedor não encontrado")));
 		produtoRepository.save(produto);
 	}
+	// ✔ Busca parcial, Não diferencia maiúsculas/minúsculas, Compatível com paginação
+	public Page<Produto> buscarPorNome(String nome, int page, int size) {
+	    return produtoRepository.findByNomeContainingIgnoreCase(
+	        nome, PageRequest.of(page, size)
+	    );
+	}
 
 	// Editar produto
 	public Produto buscarPorId(Long id) {

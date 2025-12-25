@@ -1,0 +1,67 @@
+/* Tabela padrão */
+.tabela-produtos {
+	width: 90%;              /* ⬅️ diminui a largura */
+	margin: 15px auto;       /* centraliza */
+	border-collapse: collapse;
+	font-family: Arial, sans-serif;
+	font-size: 15px;         /* ⬅️ fonte menor */
+}
+
+
+
+/* Cabeçalho (topo preto com letra branca) */
+.tabela-produtos thead th {
+    background-color: rgb(0, 0, 64);
+    color: #fff;
+    padding: 10px;
+    text-align: left;
+    text-transform: uppercase;
+    font-size: 13px;
+    border: 1px solid #333;
+}
+
+/* Corpo da tabela */
+.tabela-produtos tbody td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    vertical-align: middle;
+}
+
+/* Zebra striping */
+.tabela-produtos tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Hover na linha */
+.tabela-produtos tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Botões de ação */
+.btn-editar {
+    background-color: rgb(0, 0, 255);
+    color: #fff;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+.btn-editar:hover {
+    background-color: rgb(0, 0, 160);
+}
+
+.btn-excluir {
+    background-color: rgb(255, 0, 0);
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.btn-excluir:hover {
+    background-color: rgb(128, 0, 0);
+}

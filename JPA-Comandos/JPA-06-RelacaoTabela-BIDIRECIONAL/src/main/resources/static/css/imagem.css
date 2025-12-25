@@ -1,0 +1,56 @@
+/* Container do campo de imagem */
+.campo-imagem-wrapper {
+    position: relative;
+}
+
+/* Input file estilizado */
+.campo-imagem {
+    width: 100%;
+    padding: 12px;
+    border: 2px dashed #6c757d;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    font-size: 14px;
+    color: #495057;
+    cursor: pointer;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+/* Hover */
+.campo-imagem:hover {
+    border-color: #0d6efd;
+    background-color: #eef5ff;
+}
+
+/* Focus */
+.campo-imagem:focus {
+    outline: none;
+    border-color: #0d6efd;
+}
+
+/* Texto interno (Chrome/Edge) */
+.campo-imagem::file-selector-button {
+    padding: 8px 14px;
+    margin-right: 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #0d6efd;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.campo-imagem::file-selector-button:hover {
+    background-color: #0b5ed7;
+}
+
+/* Firefox */
+.campo-imagem::-webkit-file-upload-button {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    background-color: #0d6efd;
+    color: white;
+    cursor: pointer;
+}

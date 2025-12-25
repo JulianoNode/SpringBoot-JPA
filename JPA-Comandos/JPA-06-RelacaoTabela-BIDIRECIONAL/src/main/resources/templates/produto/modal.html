@@ -18,59 +18,64 @@
         border-radius:8px;
     ">
 
-		<h3 th:text="'Editar Produto'"></h3>
+	<h3 class="titulo-editar" th:text="'Editar Produto'"></h3>
 
-		<form th:action="@{/produtos/editar}" th:object="${produto}" method="post" enctype="multipart/form-data">
+	<form class="form-editar"
+	      th:action="@{/produtos/editar}"
+	      th:object="${produto}"
+	      method="post"
+	      enctype="multipart/form-data">
 
-			<input type="hidden" th:field="*{id}" />
+	    <input type="hidden" th:field="*{id}" />
 
-			<div>
-				<label>Nome</label>
-				<input type="text" th:field="*{nome}" />
-			</div>
+	    <div class="campo">
+	        <label>Nome</label>
+	        <input type="text" class="input-texto" th:field="*{nome}" />
+	    </div>
 
-			<div>
-				<label>Preço</label>
-				<input type="number" step="0.01" th:field="*{preco}" />
-			</div>
+	    <div class="campo">
+	        <label>Preço</label>
+	        <input type="number" step="0.01" class="input-texto" th:field="*{preco}" />
+	    </div>
 
-			<div>
-				<label>Imagem</label>
-				<!-- mantém a imagem antiga -->
-				<input type="hidden" th:field="*{imagem}">
-				<!-- mantém a imagem atual -->
-				<input type="file" name="arquivo">
-			</div>
+	    <div class="campo">
+	        <label>Imagem</label>
+	        <input type="hidden" th:field="*{imagem}">
+	        <input type="file" class="input-imagem" name="arquivo">
+	    </div>
 
-			<div>
-				<label>Categoria</label>
-				<select th:field="*{categoriaId}">
-					<option value="">Selecione</option>
-					<option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nome}">
-					</option>
-				</select>
-			</div>
+	    <div class="campo">
+	        <label>Categoria</label>
+	        <select class="input-select" th:field="*{categoriaId}">
+	            <option value="">Selecione</option>
+	            <option th:each="c : ${categorias}"
+	                    th:value="${c.id}"
+	                    th:text="${c.nome}">
+	            </option>
+	        </select>
+	    </div>
 
-			<div>
-				<label>Fornecedor</label>
-				<select th:field="*{fornecedorId}">
-					<option value="">Selecione</option>
-					<option th:each="f : ${fornecedores}" th:value="${f.id}" th:text="${f.nome}">
-					</option>
-				</select>
-			</div>
+	    <div class="campo">
+	        <label>Fornecedor</label>
+	        <select class="input-select" th:field="*{fornecedorId}">
+	            <option value="">Selecione</option>
+	            <option th:each="f : ${fornecedores}"
+	                    th:value="${f.id}"
+	                    th:text="${f.nome}">
+	            </option>
+	        </select>
+	    </div>
 
-			<!-- imagem atual -->
-			<div th:if="${produto.imagem != null}">
-				<p>Imagem atual:</p>
-				<img th:src="@{/imagens/{img}(img=${produto.imagem})}" width="100">
-			</div>
+	    <div class="imagem-atual" th:if="${produto.imagem != null}">
+	        <p>Imagem atual:</p>
+	        <img th:src="@{/imagens/{img}(img=${produto.imagem})}">
+	    </div>
 
-			<br>
+	    <div class="acoes-form">
+	        <button type="submit" class="btn-salvar">Salvar</button>
+	        <a th:href="@{/produtos}" class="btn-cancelar">Cancelar</a>
+	    </div>
 
-			<button type="submit">Salvar</button>
-			<a th:href="@{/produtos}">Cancelar</a>
-
-		</form>
+	</form>
 	</div>
 </div>

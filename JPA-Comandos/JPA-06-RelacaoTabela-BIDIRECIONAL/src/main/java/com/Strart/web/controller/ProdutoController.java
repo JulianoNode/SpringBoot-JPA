@@ -45,22 +45,43 @@ public class ProdutoController {
 	@GetMapping
 	public String listarProdutos(
 	        @RequestParam(defaultValue = "0") int page,
-	        @RequestParam(defaultValue = "2") int size,
+	        @RequestParam(defaultValue = "4") int size,
+	        @RequestParam(required = false) String busca,
 	        Model model) {
 
-	    Page<Produto> paginaProdutos = produtoService.listarPaginado(page, size);
+	    Page<Produto> paginaProdutos;
 
+	    if (busca != null && !busca.trim().isEmpty()) {
+	        paginaProdutos = produtoService.buscarPorNome(busca, page, size);
+	        model.addAttribute("busca", busca);
+	    } else {
+	        paginaProdutos = produtoService.listarPaginado(page, size);
+	    }
+
+	    // 🔢 DADOS DA PAGINAÇÃO
+	    int paginaAtual = paginaProdutos.getNumber();
+	    int totalPaginas = paginaProdutos.getTotalPages();
+
+	    // 🔢 LIMITE DE PÁGINAS VISÍVEIS
+	    int limite = 5; // quantidade de páginas que aparecem
+	    int inicio = Math.max(0, paginaAtual - limite / 2);
+	    int fim = Math.min(totalPaginas - 1, inicio + limite - 1);
+	    inicio = Math.max(0, fim - limite + 1);
+
+	    // 📦 MODEL
 	    model.addAttribute("produto", new ProdutoDTO());
 	    model.addAttribute("categorias", categoriaRepository.findAll());
 	    model.addAttribute("fornecedores", fornecedorRepository.findAll());
-	    model.addAttribute("produtos", produtoService.listar());
-	    
+
 	    model.addAttribute("produtos", paginaProdutos.getContent());
-	    model.addAttribute("paginaAtual", page);
-	    model.addAttribute("totalPaginas", paginaProdutos.getTotalPages());
+	    model.addAttribute("paginaAtual", paginaAtual);
+	    model.addAttribute("totalPaginas", totalPaginas);
+	    model.addAttribute("inicioPagina", inicio);
+	    model.addAttribute("fimPagina", fim);
 
 	    return "produto/form";
 	}
+
 
 	// Salvar Produto
 	@PostMapping
