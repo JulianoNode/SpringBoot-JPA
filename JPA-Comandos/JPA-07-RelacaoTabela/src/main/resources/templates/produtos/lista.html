@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Lista de Produtos</title>
+	<link rel="stylesheet" th:href="@{/css/listar.css}">
+</head>
+
+<header>
+	<h1>Lista de Produtos</h1>
+</header>
+<main>
+	<div class="card">
+		<a th:href="@{/index}">➕ Index</a>
+		<a th:href="@{/produtos/novo}">➕ Novo Produto</a>
+
+		<br><br>
+
+		<table>
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nome</th>
+					<th>Categorias</th>
+					<th>Fornecedores</th>
+					<th>Ações</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:each="produto : ${produtos}">
+					<td th:text="${produto.id}"></td>
+					<td th:text="${produto.nome}"></td>
+
+					<!-- Categorias -->
+					<td>
+						<span th:each="cat, iter : ${produto.categorias}">
+							<span th:text="${cat.nome}"></span>
+							<span th:if="${!iter.last}">, </span>
+						</span>
+					</td>
+
+					<!-- Fornecedores -->
+					<td>
+						<span th:each="forn, iter : ${produto.fornecedores}">
+							<span th:text="${forn.nome}"></span>
+							<span th:if="${!iter.last}">, </span>
+						</span>
+					</td>
+
+					<!-- Ações -->
+					<td class="acoes">
+						<a th:href="@{/produtos/editar/{id}(id=${produto.id})}">✏️ Editar</a>
+						<a th:href="@{/produtos/excluir/{id}(id=${produto.id})}"
+							onclick="return confirm('Deseja realmente excluir?')">
+							🗑️ Excluir
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</main>
+</body>
+
+</html>

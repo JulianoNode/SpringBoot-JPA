@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Novo Produto</title>
+	<link rel="stylesheet" th:href="@{/css/cadastroProd.css}">
+</head>
+
+<body>
+	<header>
+		<h1>Cadastrar Produto</h1>
+	</header>
+	<form th:action="@{/produtos/salvar}" th:object="${produtoDTO}" method="post">
+
+		<div>
+			<label>Nome</label>
+			<input type="text" th:field="*{nome}" />
+		</div>
+
+		<div>
+			<label>Fornecedores</label>
+			<select multiple th:field="*{fornecedorIds}">
+				<option th:each="f : ${fornecedores}" th:value="${f.id}" th:text="${f.nome}">
+				</option>
+			</select>
+		</div>
+
+		<div>
+			<label>Categorias</label>
+			<select multiple th:field="*{categoriaIds}">
+				<option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nome}">
+				</option>
+			</select>
+		</div>
+
+		<button type="submit">Salvar</button>
+	</form>
+
+</body>
+
+</html>
