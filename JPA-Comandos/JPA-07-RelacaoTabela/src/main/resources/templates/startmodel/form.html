@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Novo StartModel</title>
+	<link rel="stylesheet" th:href="@{/css/cadastroStartModel.css}">
+
+	<script>
+		function mostrarNomeArquivo(input) {
+			const fileName = document.getElementById("file-name");
+			if (input.files && input.files.length > 0) {
+				fileName.textContent = input.files[0].name;
+			} else {
+				fileName.textContent = "Nenhuma imagem selecionada";
+			}
+		}
+	</script>
+</head>
+
+<body>
+
+	<div class="form-container">
+
+		<h2>Novo StartModel</h2>
+
+		<form th:action="@{/start-model/salvar}" th:object="${startModelDTO}" method="post"
+			enctype="multipart/form-data">
+
+			<input type="hidden" th:field="*{produtoId}" />
+
+			<div class="campo">
+				<label>Título</label>
+				<input type="text" th:field="*{titulo}" required />
+			</div>
+
+			<div class="campo">
+				<label>Descrição</label>
+				<input type="text" th:field="*{descricao}" required />
+			</div>
+
+			<div class="campo campo-imagem-wrapper">
+				<label>Imagem</label>
+
+				<label class="file-label">
+					📷 Selecionar imagem
+					<input type="file" name="arquivo" accept="image/*" onchange="mostrarNomeArquivo(this)">
+				</label>
+
+				<div class="file-name" id="file-name">
+					Nenhuma imagem selecionada
+				</div>
+			</div>
+
+			<button type="submit">Salvar</button>
+		</form>
+
+	</div>
+
+</body>
+
+</html>

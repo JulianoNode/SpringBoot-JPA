@@ -2,12 +2,11 @@ package com.Strart.service;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Strart.DTOs.ProdutoDTO;
-import com.Strart.model.Categoria;
-import com.Strart.model.Fornecedor;
 import com.Strart.model.Produto;
 import com.Strart.repository.CategoriaRepository;
 import com.Strart.repository.FornecedorRepository;
@@ -25,24 +24,29 @@ public class ProdutoService {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 
-	public List<Produto> listarTodos() {
-		return produtoRepository.findAll();
-	}
-
-	public Produto salvar(ProdutoDTO dto) {
-
-		Produto produto = new Produto();
-		produto.setNome(dto.getNome());
-
-		// Buscar fornecedores pelos IDs
-		List<Fornecedor> fornecedores = fornecedorRepository.findAllById(dto.getFornecedorIds());
-
-		// Buscar categorias pelos IDs
-		List<Categoria> categorias = categoriaRepository.findAllById(dto.getCategoriaIds());
-
-		produto.setFornecedores(fornecedores);
-		produto.setCategorias(categorias);
-
-		return produtoRepository.save(produto);
-	}
+    @Autowired
+    private ModelMapper modelMapper;
+    
+    public Produto salvar(ProdutoDTO dto) {
+        Produto produto = modelMapper.map(dto, Produto.class);
+       
+        if (dto.getFornecedorIds() != null) {
+            produto.setFornecedores(
+                fornecedorRepository.findAllById(dto.getFornecedorIds())
+            );
+        }
+        if (dto.getCategoriaIds() != null) {
+            produto.setCategorias(
+                categoriaRepository.findAllById(dto.getCategoriaIds())
+            );
+        }
+        return produtoRepository.save(produto);
+    }
+    public List<Produto> listar() {
+        return produtoRepository.findAll();
+    }
+    public Produto buscarPorId(Long id) {
+        return produtoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+    }
 }

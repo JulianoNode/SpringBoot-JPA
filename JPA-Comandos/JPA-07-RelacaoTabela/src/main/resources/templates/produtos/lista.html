@@ -24,6 +24,7 @@
 					<th>Nome</th>
 					<th>Categorias</th>
 					<th>Fornecedores</th>
+					<th>Ver Cards</th>
 					<th>Ações</th>
 				</tr>
 			</thead>
@@ -31,8 +32,7 @@
 			<tbody>
 				<tr th:each="produto : ${produtos}">
 					<td th:text="${produto.id}"></td>
-					<td th:text="${produto.nome}"></td>
-
+					<td th:text="${produto.nome}"></tdth:text="${produto.id}">
 					<!-- Categorias -->
 					<td>
 						<span th:each="cat, iter : ${produto.categorias}">
@@ -49,13 +49,19 @@
 						</span>
 					</td>
 
+					<td class="acoes">
+						<!-- Botão StartModel (corrigido) -->
+						<a th:href="@{/start-model/produto/{id}(id=${produto.id})}">
+							Ver Modelo
+						</a>
+					</td>
 					<!-- Ações -->
 					<td class="acoes">
 						<a th:href="@{/produtos/editar/{id}(id=${produto.id})}">✏️ Editar</a>
 						<a th:href="@{/produtos/excluir/{id}(id=${produto.id})}"
 							onclick="return confirm('Deseja realmente excluir?')">
 							🗑️ Excluir
-						</a>
+						</a>						
 					</td>
 				</tr>
 			</tbody>

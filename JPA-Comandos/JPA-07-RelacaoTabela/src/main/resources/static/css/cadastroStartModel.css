@@ -1,0 +1,140 @@
+/* RESET BÁSICO */
+* {
+	box-sizing: border-box;
+}
+
+/* BODY */
+body {
+	font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+	background: linear-gradient(135deg, #f4f6f8, #e9ecef);
+	margin: 0;
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* CONTAINER */
+.form-container {
+	background-color: #ffffff;
+	width: 100%;
+	max-width: 500px;
+	padding: 30px;
+	border-radius: 12px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* TÍTULO */
+.form-container h2 {
+	text-align: center;
+	margin-bottom: 25px;
+	color: #343a40;
+}
+
+/* CAMPOS */
+.campo {
+	margin-bottom: 18px;
+}
+
+label {
+	display: block;
+	margin-bottom: 6px;
+	font-weight: 600;
+	color: #495057;
+	font-size: 14px;
+}
+
+/* INPUTS */
+input[type="text"],
+input[type="file"] {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ced4da;
+	border-radius: 6px;
+	font-size: 14px;
+	transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="file"]:focus {
+	outline: none;
+	border-color: #007bff;
+	box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+/* WRAPPER DO FILE */
+.campo-imagem-wrapper {
+	position: relative;
+}
+
+/* ESCONDE O INPUT ORIGINAL */
+.campo-imagem-wrapper input[type="file"] {
+	display: none;
+}
+
+/* BOTÃO FAKE */
+.file-label {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+
+	padding: 12px;
+	background: #f1f3f5;
+	border: 2px dashed #ced4da;
+	border-radius: 8px;
+
+	font-size: 14px;
+	font-weight: 600;
+	color: #495057;
+	cursor: pointer;
+
+	transition: all 0.2s ease;
+}
+
+/* HOVER */
+.file-label:hover {
+	background: #e9ecef;
+	border-color: #007bff;
+	color: #007bff;
+}
+
+/* TEXTO DO NOME DO ARQUIVO */
+.file-name {
+	margin-top: 6px;
+	font-size: 13px;
+	color: #6c757d;
+	text-align: center;
+}
+
+
+/* BOTÃO */
+button {
+	width: 100%;
+	padding: 12px;
+	background: linear-gradient(135deg, #007bff, #0056b3);
+	border: none;
+	border-radius: 8px;
+	color: #ffffff;
+	font-size: 16px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: transform 0.15s, box-shadow 0.15s;
+}
+
+button:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 8px 20px rgba(0, 123, 255, 0.25);
+}
+
+button:active {
+	transform: translateY(0);
+	box-shadow: none;
+}
+
+/* RESPONSIVO */
+@media (max-width: 480px) {
+	.form-container {
+		padding: 20px;
+	}
+}

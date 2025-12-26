@@ -44,7 +44,7 @@ public class ProdutoController {
     
     @GetMapping
     public String listar(Model model) {
-    	model.addAttribute("produtos", produtoService.listarTodos());
+    	model.addAttribute("produtos", produtoService.listar());
         return "produtos/lista";
     }
 }

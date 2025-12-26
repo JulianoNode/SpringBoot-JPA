@@ -12,6 +12,7 @@ header {
 	text-align: center;
 }
 
+
 main {
 	padding: 30px;
 	text-align: center;
@@ -30,7 +31,10 @@ td {
 }
 
 th {
-	background-color: #f2f2f2;
+	background-color: #343a40;
+	color: white;
+	padding: 15px;
+	text-align: center;
 }
 
 .acoes a {
