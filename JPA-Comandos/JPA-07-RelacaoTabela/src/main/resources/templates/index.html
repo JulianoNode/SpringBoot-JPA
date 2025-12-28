@@ -10,25 +10,25 @@
 <body>
 
 	<header>
-		<h1>Meu Sistema</h1>
+		<h1>Meu Sistema Com JPA</h1>
 	</header>
 
-	<main>
-		<div class="card">
-			<h2 th:text="${mensagem != null ? mensagem : 'Bem-vindo!'}"></h2>
-
+	<main class="container">
+		<div class="content">
+			<h1>Bem-vindo ao sistema</h1>
 			<p>Sistema desenvolvido com Spring Boot e Thymeleaf.</p>
 
-			<a th:href="@{/produtos}">Ir para Produtos</a>
-			<br>
-			<br>
-			<br>
-			<img th:src="@{/figura/tabela.png}" alt="Tabela" width="200">
-			
+			<a href="/produtos" class="btn">Ir para Produtos</a>
 		</div>
-		
+
+		<div class="image">
+			<header>
+				<h3>Como Foi Criado As Tabelas Do Prgeto</h3>
+			</header>
+			<img th:src="@{uploads/figura/tabela.png}" alt="Tabela" width="800">
+		</div>
 	</main>
-	
+
 </body>
 
 </html>

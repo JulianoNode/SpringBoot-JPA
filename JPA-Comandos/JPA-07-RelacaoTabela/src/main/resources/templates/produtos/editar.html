@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Editar Produtos</title>
+
+	<!-- CSS externo -->
+	<link rel="stylesheet" th:href="@{/css/salva_editar.css}">
+</head>
+
+<body>
+	<header>
+		<h1>Editar Produtos</h1>
+	</header>
+
+	<main>
+		<form th:action="@{/produtos/editar}" th:object="${produtoDTO}" method="post">
+
+			<input type="hidden" th:field="*{id}" />
+
+			<div>
+				<label>Nome</label>
+				<input type="text" th:field="*{nome}" />
+			</div>
+
+			<div>
+				<label>Fornecedores</label>
+				<select multiple th:field="*{fornecedorIds}">
+					<option th:each="f : ${fornecedores}" th:value="${f.id}" th:text="${f.nome}">
+					</option>
+				</select>
+			</div>
+
+			<div>
+				<label>Categorias</label>
+				<select multiple th:field="*{categoriaIds}">
+					<option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nome}">
+					</option>
+				</select>
+			</div>
+
+			<br>
+
+			<button type="submit">Salvar Alterações</button>
+		</form>
+	</main>
+</body>
+
+</html>

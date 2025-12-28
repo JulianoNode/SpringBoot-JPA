@@ -30,20 +30,21 @@
 			</thead>
 			<tbody>
 				<tr th:each="s : ${startModels}">
-					
+
 					<td th:text="${s.id}"></td>
 					<td th:text="${s.titulo}"></td>
 					<td th:text="${s.descricao}"></td>
 					<td>
-						<img th:if="${s.imagem != null}" th:src="@{'/uploads/startmodels/' + ${s.imagem}}" 
-						width="50">	<span th:if="${s.imagem == null}">Sem imagem</span>
+						<img th:if="${s.imagem != null}" th:src="@{'/uploads/startmodels/' + ${s.imagem}}" width="50">
+						<span th:if="${s.imagem == null}">Sem imagem</span>
 					</td>
 					<!-- Ações -->
 					<td class="acoes">
-						<a th:href="@{/produtos/editar/{id}(id=${produto.id})}">✏️ Editar</a>
-						<a th:href="@{/produtos/excluir/{id}(id=${produto.id})}"
-							onclick="return confirm('Deseja realmente excluir?')">
-							🗑️ Excluir
+						<a th:href="@{/start-model/editar/{id}(id=${s.id})}"> ✏️ Editar
+						</a>
+						<a th:href="@{/start-model/excluir/{id}(id=${s.id})}"
+						   onclick="return confirm('Deseja realmente excluir?')">
+						    🗑️ Excluir
 						</a>
 					</td>
 				</tr>

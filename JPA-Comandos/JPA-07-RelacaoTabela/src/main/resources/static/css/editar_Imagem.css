@@ -1,0 +1,135 @@
+/* ====== ESTILO GERAL ====== */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 20px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* ====== FORM ====== */
+form {
+    background-color: #fff;
+    max-width: 850px;
+    margin: auto;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+    /* GRID PRINCIPAL */
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 25px;
+}
+
+/* ====== CAMPOS (TÍTULO / DESCRIÇÃO) ====== */
+form > div:not(.imagem-box) {
+    grid-column: 2;
+}
+
+/* ====== IMAGEM ====== */
+.imagem-box {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    text-align: center;
+}
+
+.titulo-img {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+#previewImagem {
+    width: 100%;
+    max-height: 240px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    margin-bottom: 12px;
+}
+
+/* ====== LABELS E INPUTS ====== */
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+/* ====== UPLOAD ====== */
+.upload-area {
+    margin-top: 10px;
+}
+
+.upload-btn {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.upload-btn:hover {
+    background-color: #0056b3;
+}
+
+.upload-btn input {
+    display: none;
+}
+
+/* ====== BOTÃO ====== */
+button {
+    grid-column: 1 / -1;
+    width: 200px;
+    margin: 20px auto 0;
+    padding: 10px;
+    background-color: #28a745;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1e7e34;
+}
+
+/* ====== RESPONSIVO ====== */
+@media (max-width: 768px) {
+    form {
+        grid-template-columns: 1fr;
+    }
+
+    .imagem-box {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    form > div:not(.imagem-box) {
+        grid-column: 1;
+    }
+}

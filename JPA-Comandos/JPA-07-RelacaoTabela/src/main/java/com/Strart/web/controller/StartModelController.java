@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Strart.DTOs.StartModelDTO;
+import com.Strart.model.StartModel;
 import com.Strart.service.ProdutoService;
 import com.Strart.service.StartModelService;
 
@@ -46,7 +47,8 @@ public class StartModelController {
 
 	@PostMapping("/salvar")
 	public String salvar(@ModelAttribute StartModelDTO startModelDTO,
-			@RequestParam(value = "arquivo", required = false) MultipartFile arquivo) throws IOException {
+						@RequestParam(value = "arquivo", required = false)
+						MultipartFile arquivo) throws IOException {
 
 		salvarImagem(startModelDTO, arquivo);
 		startModelService.salvar(startModelDTO);
@@ -81,6 +83,46 @@ public class StartModelController {
 		}
 		// ✅ se não enviou nova imagem, mantém a antiga
 	}
+	
+	 // 🔹 FORM EDITAR
+    @GetMapping("/editar/{id}")
+    public String editarForm(@PathVariable Long id, Model model) {
+
+        StartModel sm = startModelService.buscarPorId(id);
+
+        StartModelDTO dto = new StartModelDTO();
+        dto.setId(sm.getId());
+        dto.setTitulo(sm.getTitulo());
+        dto.setDescricao(sm.getDescricao());
+        dto.setImagem(sm.getImagem());
+        dto.setProdutoId(sm.getProduto().getId());
+
+        model.addAttribute("startModelDTO", dto);
+        return "startmodel/editar";
+    }
+
+ // 🔹 SALVAR EDIÇÃO (COM IMAGEM)
+    @PostMapping("/editar")
+    public String editar(@ModelAttribute StartModelDTO dto,
+                         @RequestParam(value = "arquivo", required = false)
+                         MultipartFile arquivo) throws IOException {
+
+        // 🔥 se enviou nova imagem, substitui
+        salvarImagem(dto, arquivo);
+        startModelService.editar(dto);
+        return "redirect:/start-model/produto/" + dto.getProdutoId();
+    }
+    // 🔹 EXCLUIR
+    @GetMapping("/excluir/{id}")
+    public String excluir(@PathVariable Long id) {
+
+        StartModel sm = startModelService.buscarPorId(id);
+        Long produtoId = sm.getProduto().getId();
+
+        startModelService.excluir(id);
+
+        return "redirect:/start-model/produto/" + produtoId;
+    }
 
 }
 

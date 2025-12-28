@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Editar Modelo</title>
+	<link rel="stylesheet" th:href="@{/css/editar_Imagem.css}">
+	<script>
+		function previewImagem(input) {
+			const preview = document.getElementById("previewImagem");
+			const titulo = document.getElementById("tituloImagem");
+
+			if (input.files && input.files[0]) {
+				const reader = new FileReader();
+
+				reader.onload = function (e) {
+					preview.src = e.target.result;
+					titulo.innerText = "Nova imagem selecionada";
+				};
+
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+	</script>
+</head>
+
+<body>
+
+	<h2>Editar Modelo</h2>
+
+	<form th:action="@{/start-model/editar}" th:object="${startModelDTO}" method="post" enctype="multipart/form-data">
+
+		<!-- IDs -->
+		<input type="hidden" th:field="*{id}">
+		<input type="hidden" th:field="*{produtoId}">
+		<input type="hidden" th:field="*{imagem}">
+
+		<div>
+			<label>Título</label>
+			<input type="text" th:field="*{titulo}">
+		</div>
+
+		<div>
+			<label>Descrição</label>
+			<textarea th:field="*{descricao}"></textarea>
+		</div>
+
+		<!-- 🔹 IMAGEM -->
+		<div class="imagem-box">
+
+			<p class="titulo-img" id="tituloImagem">
+				Imagem atual
+			</p>
+
+			<img id="previewImagem" th:if="${startModelDTO.imagem != null}"
+				th:src="@{/imagens/{img}(img=${startModelDTO.imagem})}" alt="Imagem">
+
+			<div class="upload-area">
+				<label class="upload-btn">
+					📷 Selecionar nova imagem
+					<input type="file" name="arquivo" accept="image/*" onchange="previewImagem(this)">
+				</label>
+			</div>
+
+		</div>
+
+
+		<button type="submit">Salvar</button>
+
+	</form>
+
+</body>
+
+</html>
