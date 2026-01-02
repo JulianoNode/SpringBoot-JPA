@@ -1,0 +1,170 @@
+/* RESET BÁSICO */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Segoe UI', Arial, sans-serif;
+	background: #f4f6f9;
+	color: #2c3e50;
+	padding: 15px;
+}
+
+/* HEADER */
+.page-header {
+	background: linear-gradient(135deg, #2c3e50, #34495e);
+	padding: 5px 50px;
+	border-radius: 16px;
+	margin-bottom: 30px;
+	box-shadow: 0 10px 7px rgba(0, 0, 0, 0.18);
+}
+
+
+.page-header h1 {
+	text-align: center;
+	color: #ffffff;
+	font-size: 28px;
+	font-weight: 600;
+	margin-bottom: 35px;
+}
+
+
+.page-header p {
+	margin-top: 6px;
+	color: #dcdde1;
+	font-size: 14px;
+}
+
+/* CARDS */
+.cards-container {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	gap: 22px;
+	margin-bottom: 40px;
+}
+
+.card {
+	border-radius: 16px;
+	padding: 22px;
+	color: #fff;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+	transform: translateY(-6px);
+	box-shadow: 0 18px 30px rgba(0, 0, 0, 0.25);
+}
+
+.card-content h3 {
+	font-size: 22px;
+	margin-bottom: 6px;
+}
+
+.card-content p {
+	font-size: 14px;
+	opacity: 0.9;
+}
+
+/* AÇÕES */
+.card-actions {
+	display: flex;
+	gap: 10px;
+	margin-top: 18px;
+}
+
+.btn {
+	flex: 1;
+	text-align: center;
+	padding: 10px;
+	border-radius: 8px;
+	text-decoration: none;
+	font-weight: 600;
+	font-size: 14px;
+	transition: background 0.2s ease;
+}
+
+.btn-primary {
+	background: rgba(255, 255, 255, 0.9);
+	color: #2c3e50;
+}
+
+.btn-primary:hover {
+	background: #ffffff;
+}
+
+.btn-secondary {
+	background: rgba(0, 0, 0, 0.15);
+	color: #fff;
+}
+
+.btn-secondary:hover {
+	background: rgba(0, 0, 0, 0.25);
+}
+
+/* CORES DOS CARDS */
+.card-start {
+	background: linear-gradient(135deg, #1abc9c, #16a085);
+}
+
+.card-middle {
+	background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+.card-end {
+	background: linear-gradient(135deg, #e67e22, #d35400);
+}
+
+.card-certificado {
+	background: linear-gradient(135deg, #9b59b6, #8e44ad);
+}
+
+/* TABELA */
+.table-section {
+	background: #fff;
+	padding: 25px;
+	border-radius: 16px;
+	box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+}
+
+.table-section h2 {
+	margin-bottom: 16px;
+	font-size: 20px;
+}
+
+.styled-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.styled-table thead {
+	background: #ecf0f1;
+}
+
+.styled-table th,
+.styled-table td {
+	padding: 12px 14px;
+	text-align: left;
+}
+
+.styled-table tbody tr {
+	border-bottom: 1px solid #eee;
+}
+
+.styled-table tbody tr:hover {
+	background: #f8f9fa;
+}
+
+/* BADGE */
+.badge {
+	padding: 5px 10px;
+	border-radius: 12px;
+	font-size: 12px;
+	background: #bdc3c7;
+	color: #2c3e50;
+}

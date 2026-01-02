@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Novo Bory</title>
+</head>
+
+<body>
+
+	<h1>Novo Bory</h1>
+
+	<form th:action="@{/bory/salvar}" th:object="${bory}" method="post">
+
+
+		<label>Título:</label>
+		<input type="text" th:field="*{titulo}" /><br>
+
+		<label>Descrição:</label>
+		<textarea th:field="*{descricao}"></textarea><br>
+
+		<label>Imagem:</label>
+		<input type="text" th:field="*{imagem}" /><br>
+		<input type="hidden" th:field="*{tipo}" /><br>
+
+		<button type="submit">Salvar</button>
+	</form>
+
+	<a th:href="@{/bory}">Voltar</a>
+
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Bory</title>
+	<link rel="stylesheet" th:href="@{/css/cards.css}">
+</head>
+
+<body>
+	<header class="page-header">
+		<h1 th:text="${tipo != null ? 'Registro : ' + tipo : 'Gerenciamento de Bory'}"></h1>
+	</header>
+
+	<section class="table-section">
+
+		<h2 th:text="${tipo != null ? 'Lista de ' + tipo : 'Todos os Registros'}"></h2>
+
+		<table class="styled-table">
+			<thead>
+				<tr>
+					<th>Título</th>
+					<th>Tipo</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="bory : ${bories}">
+					<td th:text="${bory.titulo}"></td>
+					<td>
+						<span class="badge" th:text="${bory.tipo}"></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
+</body>
+
+</html>
