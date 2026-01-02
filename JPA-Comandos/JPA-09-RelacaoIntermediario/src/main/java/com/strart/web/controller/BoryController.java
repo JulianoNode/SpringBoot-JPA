@@ -1,5 +1,7 @@
 package com.strart.web.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.strart.model.Bory;
 import com.strart.model.TipoBory;
@@ -19,26 +23,23 @@ import com.strart.service.BoryService;
 public class BoryController {
 
 	@Autowired
-	private BoryRepository  repository;
-	private final BoryService service;
+	private BoryRepository repository;
 
-	public BoryController(BoryService service) {
-		this.service = service;
-	}
+	@Autowired
+	private BoryService service;
 
 	// LISTAR
+	@GetMapping
+	public String dashboard() {
+		return "bory/dashboard";
+	}
 
-    @GetMapping
-    public String dashboard() {
-        return "bory/dashboard";
-    }
-
-    @GetMapping("/lista/{tipo}")
-    public String listarPorTipo(@PathVariable TipoBory tipo, Model model) {
-        model.addAttribute("tipo", tipo);
-        model.addAttribute("bories", repository.findByTipo(tipo));
-        return "bory/lista";
-    }
+	@GetMapping("/lista/{tipo}")
+	public String listarPorTipo(@PathVariable TipoBory tipo, Model model) {
+		model.addAttribute("tipo", tipo);
+		model.addAttribute("bories", repository.findByTipo(tipo));
+		return "bory/lista";
+	}
 
 	// FORMULÁRIO
 	@GetMapping("/novo/start")
@@ -75,8 +76,10 @@ public class BoryController {
 
 	// SALVAR
 	@PostMapping("/salvar")
-	public String salvar(@ModelAttribute Bory bory) {
-		service.salvar(bory);
+	public String salvar(@ModelAttribute Bory bory, @RequestParam(value = "file", required = false) MultipartFile file)
+			throws IOException {
+
+		service.salvar(bory, file);
 		return "redirect:/bory";
 	}
 }

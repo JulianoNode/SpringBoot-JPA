@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "copos")
-public class Corpo extends AbstractEntity{
+public class Corpo extends AbstractEntity_Id{
 	
 	private String nome;
 	

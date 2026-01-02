@@ -3,30 +3,85 @@
 
 <head>
 	<title>Novo Bory</title>
+	<link rel="stylesheet" th:href="@{/css/form.css}">
 </head>
 
 <body>
 
-	<h1>Novo Bory</h1>
+	<div class="form-page">
+		<div class="form-card" th:classappend="' card-' + ${bory.tipo.name().toLowerCase()}">
 
-	<form th:action="@{/bory/salvar}" th:object="${bory}" method="post">
+			<h1 th:text="'Novo ' + ${bory.tipo}"></h1>
 
+			<form th:action="@{/bory/salvar}" th:object="${bory}" method="post" enctype="multipart/form-data">
 
-		<label>Título:</label>
-		<input type="text" th:field="*{titulo}" /><br>
+				<div class="form-layout">
 
-		<label>Descrição:</label>
-		<textarea th:field="*{descricao}"></textarea><br>
+					<!-- COLUNA ESQUERDA -->
+					<div class="form-image">
+						<label>Imagem</label>
 
-		<label>Imagem:</label>
-		<input type="text" th:field="*{imagem}" /><br>
-		<input type="hidden" th:field="*{tipo}" /><br>
+						<div class="upload-box">
+							<input type="file" name="file" id="fileInput" accept="image/*"
+								onchange="mostrarNomeArquivo(this)">
+							<label for="fileInput">📷 Selecionar imagem</label>
 
-		<button type="submit">Salvar</button>
-	</form>
+							<img id="preview">
+							<div class="file-name" id="file-name">
+								Nenhuma imagem selecionada
+							</div>
+						</div>
 
-	<a th:href="@{/bory}">Voltar</a>
+					</div>
 
+					<!-- COLUNA DIREITA -->
+					<div class="form-fields">
+
+						<div class="form-group">
+							<label>Título</label>
+							<input type="text" th:field="*{titulo}" placeholder="Digite o título" />
+						</div>
+
+						<div class="form-group">
+							<label>Descrição</label>
+							<textarea th:field="*{descricao}" placeholder="Digite a descrição"></textarea>
+						</div>
+
+						<input type="hidden" th:field="*{tipo}" />
+
+						<div class="form-actions">
+							<button type="submit" class="btn-primary">Salvar</button>
+							<a th:href="@{/bory}" class="btn-secondary">Cancelar</a>
+						</div>
+
+					</div>
+
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<script>
+		const input = document.getElementById('fileInput');
+		const preview = document.getElementById('preview');
+
+		input.addEventListener('change', () => {
+			const file = input.files[0];
+			if (file) {
+				preview.src = URL.createObjectURL(file);
+				preview.style.display = 'block';
+			}
+		});
+
+		function mostrarNomeArquivo(input) {
+			const fileName = document.getElementById("file-name");
+			if (input.files && input.files.length > 0) {
+				fileName.textContent = input.files[0].name;
+			} else {
+				fileName.textContent = "Nenhuma imagem selecionada";
+			}
+		}
+	</script>
 </body>
 
 </html>
