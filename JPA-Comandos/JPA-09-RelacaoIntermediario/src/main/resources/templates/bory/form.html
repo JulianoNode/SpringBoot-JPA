@@ -22,13 +22,13 @@
 						<label>Imagem</label>
 
 						<div class="upload-box">
+							
 							<input type="file" name="file" id="fileInput" accept="image/*"
-								onchange="mostrarNomeArquivo(this)">
-							<label for="fileInput">📷 Selecionar imagem</label>
-
+								onchange="mostrarNomeArquivo(this)" />
+							<label for="fileInput"> 📷 Selecionar imagem </label>
 							<img id="preview">
 							<div class="file-name" id="file-name">
-								Nenhuma imagem selecionada
+								<span id="file-name">Nenhuma imagem selecionada</span>
 							</div>
 						</div>
 
@@ -60,28 +60,8 @@
 			</form>
 		</div>
 	</div>
+	<script th:src="@{/js/upload-preview.js}"></script>
 
-	<script>
-		const input = document.getElementById('fileInput');
-		const preview = document.getElementById('preview');
-
-		input.addEventListener('change', () => {
-			const file = input.files[0];
-			if (file) {
-				preview.src = URL.createObjectURL(file);
-				preview.style.display = 'block';
-			}
-		});
-
-		function mostrarNomeArquivo(input) {
-			const fileName = document.getElementById("file-name");
-			if (input.files && input.files.length > 0) {
-				fileName.textContent = input.files[0].name;
-			} else {
-				fileName.textContent = "Nenhuma imagem selecionada";
-			}
-		}
-	</script>
 </body>
 
 </html>

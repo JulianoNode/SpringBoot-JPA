@@ -1,63 +1,79 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title>Gerenciamento de Bory</title>
-    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+	<title>Gerenciamento de Bory</title>
+	<link rel="stylesheet" th:href="@{/css/dashboard.css}">
 </head>
 
 <body>
 
-<header class="page-header">
-    <h1>Gerenciamento de Bory</h1>
+	<header class="page-header">
+		<h1>Gerenciamento de Bory</h1>
 
-    <section class="cards-container">
+		<section class="cards-container">
 
-        <div class="card card-start">
-            <div class="card-content">
-                <h3>Start</h3>
-                <p>Registros do tipo Start</p>
-            </div>
-            <div class="card-actions">
-                <a th:href="@{/bory/novo/start}" class="btn btn-primary">Novo</a>
-                <a th:href="@{/bory/lista/START}" class="btn btn-secondary">Listar</a>
-            </div>
-        </div>
+			<div class="card card-start">
+				<div class="card-content">
+					<h3>Start</h3>
+					<p>6 Registros do tipo Start</p>
+				</div>
+				<div class="card-actions">
+					<a th:if="${! limiteStart}" th:href="@{/bory/novo/start}" class="btn btn-primary">Novo</a>
+					<span th:if="${limiteStart}" class="limite-msg">
+						Limite atingido
+					</span>
 
-        <div class="card card-middle">
-            <div class="card-content">
-                <h3>Middle</h3>
-                <p>Registros do tipo Middle</p>
-            </div>
-            <div class="card-actions">
-                <a th:href="@{/bory/novo/middle}" class="btn btn-primary">Novo</a>
-                <a th:href="@{/bory/lista/MIDDLE}" class="btn btn-secondary">Listar</a>
-            </div>
-        </div>
+					<a th:href="@{/bory/lista/START}" class="btn btn-secondary">Listar</a>
+				</div>
+			</div>
 
-        <div class="card card-end">
-            <div class="card-content">
-                <h3>End</h3>
-                <p>Registros do tipo End</p>
-            </div>
-            <div class="card-actions">
-                <a th:href="@{/bory/novo/end}" class="btn btn-primary">Novo</a>
-                <a th:href="@{/bory/lista/END}" class="btn btn-secondary">Listar</a>
-            </div>
-        </div>
+			<div class="card card-middle">
+				<div class="card-content">
+					<h3>Middle</h3>
+					<p>9 Registros do tipo Middle</p>
+				</div>
+				<div class="card-actions">
+					<a th:if="${! limiteMiddle}" th:href="@{/bory/novo/middle}" class="btn btn-primary">Novo</a>
+					<span th:if="${limiteMiddle}" class="limite-msg">
+						Limite atingido
+					</span>
+					<a th:href="@{/bory/lista/MIDDLE}" class="btn btn-secondary">Listar</a>
+				</div>
+			</div>
 
-        <div class="card card-certificado">
-            <div class="card-content">
-                <h3>Certificado</h3>
-                <p>Registros do tipo Certificado</p>
-            </div>
-            <div class="card-actions">
-                <a th:href="@{/bory/novo/certificado}" class="btn btn-primary">Novo</a>
-                <a th:href="@{/bory/lista/CERTIFICADO}" class="btn btn-secondary">Listar</a>
-            </div>
-        </div>
+			<div class="card card-end">
+				<div class="card-content">
+					<h3>End</h3>
+					<p>9 Registros do tipo End</p>
+				</div>
+				<div class="card-actions">
+					<a th:if="${! limiteEnd}" th:href="@{/bory/novo/end}" class="btn btn-primary">Novo</a>
+					<span th:if="${limiteEnd}" class="limite-msg">
+						Limite atingido
+					</span>
+					<a th:href="@{/bory/lista/END}" class="btn btn-secondary">Listar</a>
+				</div>
+			</div>
 
-    </section>
-</header>
+			<div class="card card-certificado">
+				<div class="card-content">
+					<h3>Certificado</h3>
+					<p>3 Registros do tipo Certificado</p>
+				</div>
+				<div class="card-actions">
+					<a th:if="${! limiteCertificado}" th:href="@{/bory/novo/certificado}"
+						class="btn btn-primary">Novo</a>
+					<span th:if="${limiteCertificado}" class="limite-msg">
+						Limite atingido
+					</span>
+					<a th:href="@{/bory/lista/CERTIFICADO}" class="btn btn-secondary">Listar</a>
+				</div>
+			</div>
+
+		</section>
+	</header>
 
 </body>
+
 </html>

@@ -7,54 +7,85 @@
 </head>
 
 <body>
-	<header class="page-header">
-		<h1 th:text="${tipo != null ? 'Registro : ' + tipo : 'Gerenciamento de Bory'}"></h1>
-	</header>
 
-	<section class="cards-section">
+	<div class="page-container">
+		<!-- HEADER -->
+		<header class="page-header" th:classappend="${tipo != null ? ' header-' + #strings.toLowerCase(tipo) : ''}">
+			<h1 th:text="${tipo != null ? 'Registro : ' + tipo : 'Gerenciamento de Bory'}">
 
-		<h2 th:text="${tipo != null ? 'Lista de ' + tipo : 'Todos os Registros'}"></h2>
+			</h1>
+		</header>
 
-		<div class="cards-container">
+		<!-- LISTA -->
+		<section class="cards-section fade-in">
 
-			<div class="card" th:each="bory : ${bories}">
+			<div class="section-header">
 
-				<!-- IMAGEM -->
-				<div class="card-image">
-					<img th:if="${bory.imagem != null}"
-					     th:src="@{'/imagens/' + ${bory.pastaImagem} + '/' + ${bory.imagem}}"
-					     alt="Imagem do Bory">
+				<h2 class="section-title" th:classappend="${tipo != null ? ' title-' + #strings.toLowerCase(tipo) : ''}"
+					th:text="${tipo != null ? 'Lista de ' + tipo : 'Todos os Registros'}">
+				</h2>
 
+				<a th:href="@{/bory}" class="btn-back"
+					th:classappend="${tipo != null ? ' back-' + #strings.toLowerCase(tipo) : ''}">
+					← Voltar
+				</a>
 
-					<div th:if="${bory.imagem == null}" class="no-image">
-						Sem imagem
-					</div>
-				</div>
-
-				<!-- CONTEÚDO -->
-				<div class="card-body">
-					<small class="card-id">ID: <span th:text="${bory.id}"></span></small>
-
-					<h3 class="card-title" th:text="${bory.titulo}"></h3>
-
-					<p class="card-description" th:text="${bory.descricao}"></p>
-
-					<span class="badge" th:text="${bory.tipo}"></span>
-				</div>
-
-				<!-- AÇÕES -->
-				<div class="card-actions">
-					<a th:href="@{'/bory/editar/' + ${bory.id}}" class="btn btn-edit">Editar</a>
-
-					<a th:href="@{'/bory/remover/' + ${bory.id}}" class="btn btn-delete"
-						onclick="return confirm('Deseja remover este registro?')">
-						Remover
-					</a>
-				</div>
 			</div>
+			<div class="cards-container">
 
-		</div>
-	</section>
+				<div class="card" th:each="bory : ${bories}"
+					th:classappend="${' card-' + #strings.toLowerCase(bory.tipo)}">
+
+					<!-- IMAGEM -->
+					<div class="card-image">
+						<img th:if="${bory.imagem != null}"
+							th:src="@{'/imagens/' + ${bory.pastaImagem} + '/' + ${bory.imagem}}" alt="Imagem do Bory">
+
+						<div th:if="${bory.imagem == null}" class="no-image">
+							Sem imagem
+						</div>
+					</div>
+
+					<!-- CONTEÚDO -->
+					<div class="card-body">
+						<small class="card-id">
+							<span class="badge" th:text="' ID: ' + ${bory.id}"> </span>
+						</small>
+
+						<h3 class="card-title" th:text="${bory.titulo}"></h3>
+
+						<p class="card-description" th:text="${bory.descricao}"></p>
+
+						<!--span class="badge" th:text="${bory.tipo}"></span-->
+					</div>
+
+					<!-- AÇÕES -->
+					<div class="card-actions">
+
+						<a th:if="${!limiteAtingido}" th:href="@{'/bory/novo/' + ${#strings.toLowerCase(bory.tipo)}}"
+							class="btn btn-edit">
+							Novo
+						</a>
+						<span th:if="${limiteAtingido}" class="limite-msg">
+							Limite atingido
+						</span>
+
+						<a th:href="@{'/bory/editar/' + ${bory.id}}" class="btn btn-edit">
+							Editar
+						</a>
+
+						<a th:href="@{'/bory/remover/' + ${bory.id}}" class="btn btn-delete"
+							onclick="return confirm('Deseja remover este registro?')">
+							Remover
+						</a>
+
+					</div>
+
+				</div>
+
+			</div>
+		</section>
+	</div>
 </body>
 
 </html>
