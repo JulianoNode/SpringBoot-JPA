@@ -30,16 +30,12 @@ public class BoryService {
 	}
 
 	// MÉTODO CORRETO
-	public void salvar(Bory bory, MultipartFile file) throws IOException {
-		if (file != null && !file.isEmpty()) {
-			String pasta = pastaPorTipo(bory.getTipo());
-			String imagem = imagemService.salvarImagem(file, pasta);
-
-			bory.setImagem(imagem);
-			bory.setPastaImagem(pasta);
-		}
-
-		repository.save(bory);
+	public Bory salvar(Bory bory, MultipartFile file) throws IOException {
+		// 🔒 valida o limite ANTES de salvar
+		validarLimiteCards(bory);
+		prepararImagem(bory, file);
+		
+		return repository.save(bory);
 	}
 
 	// Define pasta conforme o tipo
@@ -51,4 +47,53 @@ public class BoryService {
 		case CERTIFICADO -> "certificados";
 		};
 	}
+
+	// VALIDAR LIMITE (ESSENCIAL)
+	public void validarLimiteCards(Bory bory) {
+
+        long quantidadeAtual = repository.countByTipo(bory.getTipo());
+        int limite = limitePorTipo(bory.getTipo());
+
+        while (quantidadeAtual >= limite) {
+            throw new IllegalStateException(
+                "Limite de cards para o tipo " + bory.getTipo() +
+                " já foi excedido. Máximo permitido: " + limite
+            );
+        }
+	}
+
+	public boolean limiteAtingido(TipoBory tipo) {
+	    return repository.countByTipo(tipo) >= limitePorTipo(tipo);
+	}
+	
+	// VALIDAR IMAGEM (ESSENCIAL)
+	private void prepararImagem(Bory bory, MultipartFile file) throws IOException {
+		// Exemplo: validação de limite por tipo
+		long quantidade = repository.countByTipo(bory.getTipo());
+
+		int limite = limitePorTipo(bory.getTipo());
+
+		if (quantidade >= limite) {
+			throw new IllegalStateException("Limite de registros atingido para o tipo: " + bory.getTipo());
+		}
+
+		// Salvar imagem (se existir)
+		if (file != null && !file.isEmpty()) {
+			String pasta = pastaPorTipo(bory.getTipo());
+			String imagem = imagemService.salvarImagem(file, pasta);
+
+			bory.setImagem(imagem);
+			bory.setPastaImagem(pasta);
+		}
+	}
+
+	private int limitePorTipo(TipoBory tipo) {
+		return switch (tipo) {
+		case START -> 6;
+		case MIDDLE -> 9;
+		case END -> 9;
+		case CERTIFICADO -> 3;
+		};
+	}
+
 }
