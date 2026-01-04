@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cadastro Tema</title>
+</head>
+<body>
+
+<h2>Cadastro de Tema</h2>
+
+<form th:action="@{/temacorCSS/salvar}" th:object="${tema}" method="post">
+
+    <input type="hidden" th:field="*{id}" />
+
+    <label>Nome:</label><br>
+    <input type="text" th:field="*{nome}" required><br><br>
+
+    <label>Cor Tema:</label><br>
+    <input type="text" th:field="*{corTema}" placeholder="#2c3e50" required><br><br>
+
+    <label>Gradiente Início:</label><br>
+    <input type="text" th:field="*{gradienteInicio}" required><br><br>
+
+    <label>Gradiente Fim:</label><br>
+    <input type="text" th:field="*{gradienteFim}" required><br><br>
+
+    <label>
+        <input type="checkbox" th:field="*{ativo}">
+        Tema ativo
+    </label><br><br>
+
+    <button type="submit">Salvar</button>
+    <a th:href="@{/temacorCSS}">Cancelar</a>
+
+</form>
+
+</body>
+</html>

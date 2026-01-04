@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Temas CSS</title>
+</head>
+
+<body>
+
+	<h2>Temas</h2>
+
+	<a th:href="@{/temacorCSS/novo}">Novo Tema</a>
+
+	<table border="1" cellpadding="6">
+		<tr>
+			<th>Nome</th>
+			<th>Cor Tema</th>
+			<th>Gradiente Início</th>
+			<th>Cor Gradiente Fim</th>
+			<th>Ativo</th>
+			<th>Ações</th>
+		</tr>
+
+		<tr th:each="t : ${temas}">
+			<td th:text="${t.nome}"></td>
+			<td>
+				<span th:text="${t.corTema } "> </span>
+				<span th:style="'background: ' + ${t.corTema} + '; padding: 2px 8px' "> </span>
+			</td>
+			<td>
+				<span th:text="${t.gradienteInicio}"></span>
+				<span th:style="'background:' + ${t.gradienteInicio} + '; padding: 2px 8px'"></span>
+			</td>
+			<td>
+				<span th:text="${t.gradienteFim}"></span>
+				<span th:style="'background:' + ${t.gradienteFim} + '; padding: 2px 8px'"></span>
+			</td>
+			<td th:text="${t.ativo}"></td>
+			<td>
+				<a th:href="@{/temacorCSS/editar/{id}(id=${t.id})}">Editar</a>
+				|
+				<a th:href="@{/temacorCSS/remover/{id}(id=${t.id})}" onclick="return confirm('Remover?')">Excluir</a>
+			</td>
+		</tr>
+	</table>
+
+</body>
+
+</html>

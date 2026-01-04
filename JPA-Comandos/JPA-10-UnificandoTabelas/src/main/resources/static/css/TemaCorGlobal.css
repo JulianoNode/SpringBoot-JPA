@@ -1,0 +1,19 @@
+:root {
+	--cor-tema: [[$ {
+		tema.corTema
+	}
+	]];
+}
+
+header {
+    background-color: var(--cor-tema);
+}
+
+.btn-tema {
+    color: #fff;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}

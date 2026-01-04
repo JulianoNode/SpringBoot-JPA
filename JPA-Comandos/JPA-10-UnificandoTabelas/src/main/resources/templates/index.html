@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Página Inicial</title>
+	<link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+
+<body>
+
+	<header>
+		<h1>Meu Sistema Com JPA</h1>
+	</header>
+
+	<main class="container">
+		<div class="content">
+			<h1>Bem-vindo ao sistema</h1>
+			<p>Sistema desenvolvido com Spring Boot e Thymeleaf.</p>
+
+			<a href="bory" class="btn">Ir para Produtos</a>
+		</div>
+		
+		<button class="btn-tema"
+		        th:style="'background: ' + ${tema.gradienteBotao}">
+		    Salvar
+		</button>
+
+
+		<div class="image">
+			<header>
+				<h3>Como Foi Criado As Tabelas Do Prgeto</h3><br>
+				<h4>Fluxo De Tabelas Usando Um Enum Em Java Cum Lup Nas Tabelas</h4>
+			</header>
+			<img th:src="@{imagem/TabelaBoryComLup.png}" alt="Tabela" width="800">
+		</div>
+	</main>
+
+</body>
+
+</html>
