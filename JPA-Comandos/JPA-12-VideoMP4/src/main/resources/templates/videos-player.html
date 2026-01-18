@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Biblioteca de Vídeos</title>
+	<style>
+		body {
+			background: linear-gradient(135deg, #2c3e50, #4ca1af);
+			font-family: Arial, sans-serif;
+			padding: 30px;
+			color: #fff;
+		}
+
+		.container {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+			gap: 20px;
+		}
+
+		.card {
+			background: rgba(0, 0, 0, 0.35);
+			padding: 15px;
+			border-radius: 12px;
+		}
+
+		video {
+			width: 100%;
+			border-radius: 10px;
+			background: #000;
+		}
+		
+		.link-upload {
+		    background: linear-gradient(135deg, #ff9800, #ff5722);
+		    box-shadow: 0 0 12px rgba(255, 152, 0, 0.6);
+		}
+
+		.link-upload:hover {
+		    background: linear-gradient(135deg, #ff5722, #ff9800);
+		    box-shadow: 0 0 18px rgba(255, 152, 0, 0.9);
+		}
+	</style>
+</head>
+
+<body>
+
+	<h1>🎬 Biblioteca de Vídeos</h1> 
+
+	<a href="/videos/upload" class="link-upload">⬆️ Enviar novo vídeo</a>
+	<br><br>
+	<div class="container">
+		<div class="card" th:each="video : ${videos}">
+			<video controls preload="metadata" playsinline>
+				<source th:src="@{/stream/{p}/{n}(p=${video.pasta}, n=${video.nomeArquivo})}" th:type="${video.tipo}">
+				Seu navegador não suporta vídeo.
+			</video>
+			<div th:text="${video.nomeArquivo}"></div>
+		</div>
+	</div>
+
+</body>
+
+</html>

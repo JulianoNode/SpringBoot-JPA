@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Upload de Vídeo</title>
+	<style>
+		body {
+			background: linear-gradient(135deg, #2c3e50, #4ca1af);
+			font-family: Arial, sans-serif;
+			padding: 40px;
+			color: #fff;
+		}
+
+		form {
+			background: rgba(0, 0, 0, .35);
+			padding: 30px;
+			border-radius: 12px;
+			width: 400px;
+		}
+
+		button {
+			margin-top: 15px;
+			padding: 10px;
+			width: 100%;
+		}
+	</style>
+</head>
+
+<body>
+
+	<h1>⬆️ Enviar Vídeo</h1>
+
+	<form th:action="@{/videos/salvar}" method="post" enctype="multipart/form-data">
+		<input type="file" name="file" accept="video/mp4,video/webm" required>
+		<button type="submit">Salvar</button>
+	</form>
+
+	<br>
+	<a href="/videos">🎬 Ver vídeos</a>
+
+</body>
+
+</html>
